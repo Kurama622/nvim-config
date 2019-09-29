@@ -1,0 +1,359 @@
+" =============================================== 插件配置 ===============================================
+call plug#begin('~/.config/nvim/plugged')
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'xuhdev/vim-latex-live-preview', {'for':'tex'}
+Plug 'xuhdev/SingleCompile'
+Plug 'vim-latex/vim-latex', {'for':'tex'}
+call plug#end()
+
+let g:coc_global_extensions = ['coc-python']
+let g:tex_flavor='latex'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_SmartKeyBS=0
+let g:Tex_ViewRule_pdf = 'zathura'
+
+call SingleCompile#SetCompilerTemplate('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex', 'XeLatex',
+            \ '/usr/local/texlive/2019/bin/x86_64-linux/xelatex', '',
+            \ SingleCompile#GetDefaultOpenCommand() .
+            \ ' "$(FILE_TITLE)$.pdf"')
+call SingleCompile#ChooseCompiler('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex')
+nmap <F6> :SCCompile<CR>
+imap <F6> :SCCompile<CR>
+let g:livepreview_previewer='zathura'
+autocmd Filetype tex,plaintex setl updatetime=1
+let g:livepreview_engine='/usr/local/texlive/2019/bin/x86_64-linux/xelatex'
+let g:livepreview_cursorhold_recompile=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+let g:Tex_FoldedSections=''
+" =============================================== 插件配置 ===============================================
+
+" colorscheme molokai
+" set background=dark
+colorscheme mycolor
+set t_Co=256                                                    " 开启256色支持
+syntax on
+filetype plugin indent on
+filetype on
+let mapleader=" "                                               " 设置leader键为空格键
+set nocompatible                                                " 不以兼容模式运行
+set encoding=utf-8                                              " utf-8编码
+set helplang=cn                                                 " 中文帮助文档
+set number                                                      " 显示行号
+set wrap                                                        " 自动换行
+set showcmd                                                     " 显示输入信息
+set cursorline                                                  " 显示光标所在行
+set wildmenu                                                    " 显示补全提示
+set hlsearch                                                    " 高亮搜索结果
+" set foldenable                                                " 允许折叠
+" set foldmethod=manual                                         " 手动折叠
+
+" 打开vim运行nohlsearch，取消高亮
+exec "nohlsearch"
+set ts=4                                                        " 设置tab键长度为四个空格
+set expandtab                                                   " 设置tab键替换为四个空格键
+
+" 将文件中的tab键替换成空格
+map <LEADER>    :retab!<CR>
+set incsearch                                                   " 一边输入一边高亮
+set ignorecase                                                  " 忽略大小写
+set smartcase                                                   " 智能大小写
+set laststatus=2                                                " 设置状态栏在倒数第2行
+
+" ======================================== 设置状态栏格式 ========================================
+set statusline=%1*\%<%.50F\                                     "显示文件名和文件路径
+set statusline+=%=%2*\%y%m%r%h%w\ %*                            "显示文件类型及文件状态
+set statusline+=%3*\%{&ff}\[%{&fenc}]\ %*                       "显示文件编码类型
+set statusline+=%4*\ row:%l/%L,col:%c\ %*                       "显示光标所在行和列
+set statusline+=%5*\%3p%%\%*                                    "显示光标前文本所占总文本的比例
+hi User1 cterm=none ctermfg=25 ctermbg=0
+hi User2 cterm=none ctermfg=208 ctermbg=0
+hi User3 cterm=none ctermfg=169 ctermbg=0
+hi User4 cterm=none ctermfg=100 ctermbg=0
+hi User5 cterm=none ctermfg=green ctermbg=0
+" ======================================== 设置状态栏格式 ========================================
+
+set mouse=a                                                     " 启用鼠标
+set backspace=indent,eol,start                                  " 退格键可以退到上一行
+set scrolloff=5                                                 " 光标行上下移动范围各缩小5行
+"set ruler
+"set transparency=11
+
+" 设置背景透明
+hi Normal ctermfg=252 ctermbg=none
+" 寻找下一搜索结果，并将其置于屏幕中心
+noremap = nzz
+" 寻找上一搜索结果，并将其置于屏幕中心
+noremap - Nzz
+" 取消高亮
+noremap <LEADER><CR> :nohlsearch<CR>
+map s <nop>
+" 保存
+map S :w<CR>
+" 退出
+map Q :q<CR>
+" 右分屏，聚焦右窗口
+map sl :set splitright<CR>:vsplit<CR>:e 
+" 左分屏，聚焦左窗口
+map sh :set nosplitright<CR>:vsplit<CR>:e 
+" 上分屏，聚焦上窗口
+map sk :set nosplitbelow<CR>:split<CR>:e 
+" 下分屏，聚焦下窗口
+map sj :set splitbelow<CR>:split<CR>:e 
+" 光标移至右窗口
+map <LEADER>l <C-w>l
+" 光标移至上窗口
+map <LEADER>k <C-w>k
+" 光标移至下窗口
+map <LEADER>j <C-w>j
+" 光标移至左窗口
+map <LEADER>h <C-w>h
+" 窗口上移
+map <up> :res +5<CR>
+" 窗口下移
+map <down> :res -5<CR>
+" 窗口左移
+map <left> :vertical resize-5<CR>
+" 窗口右移
+map <right> :vertical resize+5<CR>
+" 新建标签页
+map <C-n> :tabe<CR>
+" 前一标签页
+map t- :-tabnext<CR>
+" 后一标签页
+map t= :+tabnext<CR>
+" 重新加载vim配置文件
+map rc :source $MYVIMRC<CR>
+" 寻找两个相等的单词
+map <LEADER>fd /\(\<\w\+\>\)\_s*\1
+" 替换占空符<++>
+map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4l
+" 全选
+map <C-a> ggVG
+" 打开我的vimrc
+map <LEADER>rc :e ~/.config/nvim/init.vim<CR>
+" 复制到系统剪切板
+map +y "+y
+" 从系统剪切板粘贴
+map +p "+p
+" 插入模式下jj映射为<Esc>
+inoremap jj <Esc>
+
+set list
+set listchars=tab:▸\ ,trail:▫
+
+" ======================================== 自动匹配括号 ========================================
+autocmd filetype c,python,vim,conf inoremap <buffer> ( ()<++><ESC>4hi
+autocmd filetype c,python,vim,conf inoremap <buffer> ) <c-r>=ClosePair(')')<CR>
+autocmd filetype c,python,vim,conf inoremap <buffer> { {}<++><ESC>4hi
+autocmd filetype c,python,vim,conf inoremap <buffer> } <c-r>=ClosePair('}')<CR>
+autocmd filetype c,python,vim,conf inoremap <buffer> [ []<++><ESC>4hi
+autocmd filetype c,python,vim,conf inoremap <buffer> ] <c-r>=ClosePair(']')<CR>
+autocmd filetype c,conf inoremap <buffer> " ""<++><ESC>4hi
+autocmd filetype c,vim,conf inoremap <buffer> ' ''<++><ESC>4hi
+function! ClosePair(char)
+if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endfunction
+" ======================================== 自动匹配括号 ========================================
+
+let &t_SI = "\<Esc>]50;CursorShape=1\x7" 
+let &t_SR = "\<Esc>]50;CursorShape=2\x7" 
+let &t_EI = "\<Esc>]50;CursorShape=0\x7" 
+
+" 打开文件，光标回到上次编辑的位置
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" =============================================== 创建文件头 ===============================================
+autocmd BufNewFile *.py,*.tex exec ":call SetTitle()"
+func! SetTitle()
+    if &filetype == 'python'
+        call setline(1,"#!/usr/bin/env python3")
+        call append(line("."),"# -*- coding:UTF-8 -*-")
+        call append(line(".")+1,"##########################################################################")
+        call append(line(".")+2, "# File Name: ".expand("%"))
+        call append(line(".")+3, "# Author: stubborn vegeta")
+        call append(line(".")+4, "# Created Time: ".strftime("%c"))
+        call append(line(".")+5, "##########################################################################")
+        call append(line(".")+6, "<++>")
+    endif
+    if &filetype == 'plaintex'
+        call setline(1,"% -*- coding:UTF-8 -*-")
+        call append(line("."),"% #########################################################################")
+        call append(line(".")+1, "% File Name: ".expand("%"))
+        call append(line(".")+2, "% Author: stubborn vegeta")
+        call append(line(".")+3, "% Created Time: ".strftime("%c"))
+        call append(line(".")+4, "% #########################################################################")
+        call append(line(".")+5, "\\documentclass[UTF8]{<++>}")
+        call append(line(".")+6, "\\usepackage{graphicx}")
+        call append(line(".")+7, "\\usepackage{booktabs}")
+        call append(line(".")+8, "\\usepackage{geometry}")
+        call append(line(".")+9, "\\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}")
+        call append(line(".")+10, "\\pagestyle{plain}")
+        call append(line(".")+11, "\\begin{document}")
+        call append(line(".")+12, "<++>")
+        call append(line(".")+13, "\\end{document}")
+    endif
+    if &filetype == 'tex'
+        call setline(1,"% -*- coding:UTF-8 -*-")
+        call append(line("."),"% #########################################################################")
+        call append(line(".")+1, "% File Name: ".expand("%"))
+        call append(line(".")+2, "% Author: stubborn vegeta")
+        call append(line(".")+3, "% Created Time: ".strftime("%c"))
+        call append(line(".")+4, "% #########################################################################")
+        call append(line(".")+5, "\\documentclass[UTF8]{<++>}")
+        call append(line(".")+6, "\\usepackage{graphicx}")
+        call append(line(".")+7, "\\usepackage{booktabs}")
+        call append(line(".")+8, "\\usepackage{geometry}")
+        call append(line(".")+9, "\\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}")
+        call append(line(".")+10, "\\pagestyle{plain}")
+        call append(line(".")+11, "\\begin{document}")
+        call append(line(".")+12, "<++>")
+        call append(line(".")+13, "\\end{document}")
+    endif
+"     normal G 
+endfunc
+" =============================================== 创建文件头 ===============================================
+
+" 设置注释快捷键
+map <LEADER>' :call Note()<CR>
+func! Note()
+    if &filetype == 'python'
+        normal 0i# 
+    endif
+    if &filetype == 'vim'
+        normal 0i" 
+    endif
+    if &filetype == 'plaintex'
+        normal 0i% 
+    endif
+    if &filetype == 'tex'
+        normal 0i% 
+    endif
+    if &filetype == 'c'
+        normal 0i// 
+    endif
+endfunc
+" 设置取消注释
+map <LEADER>" 0df j
+
+" ========
+" ======== coc
+" ========
+function! s:check_back_space() abort
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1] =~ '\s'
+endfunction
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+nmap <silent> gd <Plug>(coc-definition) 
+nmap <silent> gy <Plug>(coc-type-definition) 
+nmap <silent> gi <Plug>(coc-implementation) 
+nmap <LEADER>rn <Plug>(coc-rename)
+
+" ========
+" ======== markdown
+" ========
+" markdown加粗命令
+autocmd filetype markdown inoremap <buffer> ,b **** <++><ESC>F*hi
+" markdown斜体
+autocmd filetype markdown inoremap <buffer> ,i ** <++><ESC>F*i
+" markdown插入图片
+autocmd filetype markdown inoremap <buffer> ,f ![](<++>)<ESC>F[a
+" markdown插入链接
+autocmd filetype markdown inoremap <buffer> ,l [](<++>)<Esc>F[a
+" markdown插入数学公式
+autocmd filetype markdown inoremap <buffer> ,m $$<CR><CR>$$ <++><Esc>ki
+" markdown插入代码块
+autocmd filetype markdown inoremap <buffer> ,c ```<CR>``` <++><Esc>k$a
+" markdown插入图片(html)
+autocmd filetype markdown inoremap <buffer> ,h <Esc>:call Imagehtml()<CR>2jf"a
+function! Imagehtml()
+        if &filetype == 'markdown'
+                call append(line("."), "<center>")
+                call append(line(".")+1, "<img src=\"\" alt=\"<++>\" height=\"50%\" width=\"50%\" />")
+                call append(line(".")+2, "</center>")
+        endif
+endfunction
+autocmd filetype markdown map <buffer> ; :call InsertString()<CR>
+function! InsertString()
+        if getline(".")[col(".")-2] == '|'
+                normal i <++> | 
+        else
+                normal i| <++> | 
+        endif
+endfunction
+
+autocmd filetype markdown inoremap <buffer> ,t <ESC>:call InsertTable()<CR>
+function! InsertTable()
+        call append(line("."), "| <++> | <++> | ")
+        call append(line(".")+1, "| :--: | :--: | ")
+        call append(line(".")+2, "| <++> | <++> | ")
+endfunction
+
+autocmd filetype markdown map <buffer> 3t :call InsertTable3()<CR>
+function! InsertTable3()
+        call append(line("."), "| <++> | <++> | <++> | ")
+        call append(line(".")+1, "| :--: | :--: | :--: | ")
+        call append(line(".")+2, "| <++> | <++> | <++> | ")
+endfunction
+
+" =======
+" ======= LaTeX
+" =======
+autocmd filetype tex,plaintex inoremap <buffer> ,1 \section{}<CR><++><Esc>kf{a
+autocmd filetype tex,plaintex inoremap <buffer> ,2 \subsection{}<CR><++><Esc>kf{a
+autocmd filetype tex,plaintex inoremap <buffer> ,3 \subsubsection{}<CR><++><Esc>kf{a
+autocmd filetype tex,plaintex inoremap <buffer> ,b \textbf{}<++><Esc>4hi
+autocmd filetype tex,plaintex inoremap <buffer> ,i \textit{}<++><Esc>4hi
+autocmd filetype tex,plaintex inoremap <buffer> ,f \begin{figure}[<++>]<CR>\centering<CR>\includegraphics[scale=<++>]{<++>}<CR>\caption{<++>}<CR>\end{figure}<CR><++><Esc>5k
+autocmd filetype tex,plaintex inoremap <buffer> ,t \begin{table}<CR>\centering<CR>\caption{<++>}<CR>\begin{tabular}{<++>}<CR><++><CR>\end{tabular}<CR>\end{table}<CR><++><Esc>7k
+autocmd filetype tex,plaintex inoremap <buffer> ,m \[<CR><CR>\]<CR><CR><++><Esc>3ki
+autocmd filetype tex,plaintex inoremap <buffer> ,e \begin{equation}<CR><CR>\end{equation}<Esc>0kk
+autocmd filetype tex,plaintex inoremap <buffer> <F1> \begin{<++>}<CR><CR>\end{<++>}<Esc>0kk
+autocmd filetype tex,plaintex nmap <buffer> <F10> :LLPStartPreview<CR>
+" autocmd filetype tex,plaintex nmap <buffer> <F10> :call Tex_ViewLaTeX()<CR>
+
+" =======
+" ======= python
+" =======
+autocmd filetype python inoremap <buffer> ,' """<CR><CR>"""<CR><++><Esc>2ki
+
+" =======
+" ======= runcode
+" =======
+map <F5> :call RunCode()<CR>
+func! RunCode()
+    exec "w"
+    if &filetype == 'python'
+            if search("@profile")
+                    exec "AsyncRun kernprof -l -v %"
+                    exec "copen"
+                    exec "wincmd p"
+             elseif search("set_trace()")
+                     exec "!python3 %"
+             else
+                    exec "AsyncRun -raw python3 %"
+                    exec "copen"
+                    exec "wincmd p"
+            endif
+    endif
+
+    if &filetype == 'dot'
+    exec "!dot % -T png -o %.png"
+    exec "!feh %.png"
+    endif
+
+    if &filetype == 'markdown'
+        exec "MarkdownPreview"
+    endif
+endfunc
