@@ -1380,11 +1380,15 @@ function! asyncrun#quickfix_toggle(size, ...)
       let l:win_loc = get(g:, 'asyncrun_win_loc', 0)
       if l:win_loc == 1
         exec 'vert copen'
+"         exec 'vertical left cwindow'
+"         exec 'botright copen'
         wincmd h
         exec 'vertical resize +' . ((a:size > 0)? a:size : '100')
         wincmd l
       elseif l:win_loc == 2
         exec 'vert copen'
+"         exec 'vertical left cwindow'
+"         exec 'botright copen'
         wincmd h
         exec 'vertical resize +' . ((a:size > 0)? a:size : '100')
         wincmd l

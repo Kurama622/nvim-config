@@ -1,11 +1,15 @@
 " =============================================== 插件配置 ===============================================
 call plug#begin('~/.config/nvim/plugged')
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
+" Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'xuhdev/vim-latex-live-preview', {'for':'tex'}
 Plug 'xuhdev/SingleCompile'
 Plug 'vim-latex/vim-latex', {'for':'tex'}
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
 let g:coc_global_extensions = ['coc-python']
@@ -39,9 +43,12 @@ filetype plugin indent on
 filetype on
 let mapleader=" "                                               " 设置leader键为空格键
 set nocompatible                                                " 不以兼容模式运行
-set encoding=utf-8                                              " utf-8编码
+" set encoding=utf-8                                              " utf-8编码
+" set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,gb18030,cp936,latin1
+set fileencodings=ucs-bom,utf-8,gb2313,gb18030,gbk,cp936,latin1
+set fileformats=unix,dos,mac
 set helplang=cn                                                 " 中文帮助文档
-set number                                                      " 显示行号
+set relativenumber                                                      " 显示行号
 set wrap                                                        " 自动换行
 set showcmd                                                     " 显示输入信息
 set cursorline                                                  " 显示光标所在行
@@ -52,8 +59,11 @@ set hlsearch                                                    " 高亮搜索�
 
 " 打开vim运行nohlsearch，取消高亮
 exec "nohlsearch"
+set shiftwidth=4                                                "自动缩进空白字符个数为4
 set ts=4                                                        " 设置tab键长度为四个空格
 set expandtab                                                   " 设置tab键替换为四个空格键
+" set cindent                                                     " 设置C自动缩进
+" set autoindent
 
 " 将文件中的tab键替换成空格
 map <LEADER>    :retab!<CR>
@@ -119,13 +129,14 @@ map <left> :vertical resize-5<CR>
 " 窗口右移
 map <right> :vertical resize+5<CR>
 " 新建标签页
-map <C-n> :tabe<CR>
+map tn :tabe<CR>
 " 前一标签页
 map t- :-tabnext<CR>
 " 后一标签页
 map t= :+tabnext<CR>
 " 重新加载vim配置文件
-map rc :source $MYVIMRC<CR>
+" map rc :source $MYVIMRC<CR>
+map rc :source ~/.config/nvim/init.vim<CR>
 " 寻找两个相等的单词
 map <LEADER>fd /\(\<\w\+\>\)\_s*\1
 " 替换占空符<++>
@@ -145,21 +156,22 @@ set list
 set listchars=tab:▸\ ,trail:▫
 
 " ======================================== 自动匹配括号 ========================================
-autocmd filetype c,python,vim,conf inoremap <buffer> ( ()<++><ESC>4hi
-autocmd filetype c,python,vim,conf inoremap <buffer> ) <c-r>=ClosePair(')')<CR>
-autocmd filetype c,python,vim,conf inoremap <buffer> { {}<++><ESC>4hi
-autocmd filetype c,python,vim,conf inoremap <buffer> } <c-r>=ClosePair('}')<CR>
-autocmd filetype c,python,vim,conf inoremap <buffer> [ []<++><ESC>4hi
-autocmd filetype c,python,vim,conf inoremap <buffer> ] <c-r>=ClosePair(']')<CR>
-autocmd filetype c,conf inoremap <buffer> " ""<++><ESC>4hi
-autocmd filetype c,vim,conf inoremap <buffer> ' ''<++><ESC>4hi
-function! ClosePair(char)
-if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endfunction
+" autocmd filetype c,r,python,vim,conf inoremap <buffer> ( ()<ESC>i
+" autocmd filetype c,r,python,vim,conf inoremap <buffer> ) <c-r>=ClosePair(')')<CR>
+" autocmd filetype c,r,python,vim,conf inoremap <buffer> { {}<ESC>i
+" autocmd filetype c,r,python,vim,conf inoremap <buffer> } <c-r>=ClosePair('}')<CR>
+" autocmd filetype c,r,python,vim,conf inoremap <buffer> [ []<ESC>i
+" autocmd filetype c,r,python,vim,conf inoremap <buffer> ] <c-r>=ClosePair(']')<CR>
+" autocmd filetype c,r,conf inoremap <buffer> " ""<ESC>i
+" autocmd filetype c,r,vim,conf inoremap <buffer> ' ''<ESC>i
+autocmd filetype r inoremap <buffer> <space>=<space> <space><-<space><ESC>a
+" function! ClosePair(char)
+" if getline('.')[col('.') - 1] == a:char
+"         return "\<Right>"
+"     else
+"         return a:char
+"     endif
+" endfunction
 " ======================================== 自动匹配括号 ========================================
 
 let &t_SI = "\<Esc>]50;CursorShape=1\x7" 
@@ -263,6 +275,86 @@ nmap <LEADER>rn <Plug>(coc-rename)
 " ========
 " ======== markdown
 " ========
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {}
+    \ }
+
+" use a custom markdown style must be absolute path
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+
 " markdown加粗命令
 autocmd filetype markdown inoremap <buffer> ,b **** <++><ESC>F*hi
 " markdown斜体
@@ -306,7 +398,9 @@ function! InsertTable3()
         call append(line(".")+1, "| :--: | :--: | :--: | ")
         call append(line(".")+2, "| <++> | <++> | <++> | ")
 endfunction
-
+let g:table_mode_corner='|'
+let g:table_mode_corner_corner='+'
+noremap <LEADER>tm :TableModeToggle<CR>
 " =======
 " ======= LaTeX
 " =======
@@ -342,12 +436,22 @@ func! RunCode()
              elseif search("set_trace()")
                      exec "!python3 %"
              else
+                    exec 'vertical rightbelow copen 50'
+                    exec 'wincmd w'
                     exec "AsyncRun -raw python3 %"
                     exec "copen"
                     exec "wincmd p"
             endif
     endif
 
+    if &filetype == 'r'
+        exec "AsyncRun -raw Rscript %"
+        exec "copen"
+        exec "wincmd p"
+        if filereadable('Rplots.pdf')
+            exec "!zathura Rplots.pdf &"
+        endif
+    endif
     if &filetype == 'dot'
     exec "!dot % -T png -o %.png"
     exec "!feh %.png"
@@ -355,5 +459,16 @@ func! RunCode()
 
     if &filetype == 'markdown'
         exec "MarkdownPreview"
+    endif
+endfunc
+
+map <F17> :call RunCodeRepl()<CR>
+func! RunCodeRepl()
+    exec "w"
+    if &filetype == 'python'
+        set splitright
+        :vsp
+        :term python3 %
+        normal i
     endif
 endfunc
