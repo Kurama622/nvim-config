@@ -1,0 +1,55 @@
+snippet b "Bold"
+**${1:text}**
+endsnippet
+
+snippet i "Italic"
+*${1:text}*
+endsnippet
+
+snippet img "Image"
+![${1:name}](${2:link})
+endsnippet
+
+snippet l "Link"
+[${1:text}](${2:link})
+endsnippet
+
+snippet m "Math"
+$$
+${1:math}
+$$
+${0}
+endsnippet
+
+snippet c "Code"
+\`\`\`${1:type}
+${2:code}
+\`\`\`
+${0}
+endsnippet
+
+snippet image "HTML Image"
+<center>
+<img src="${1:link}" alt="${2:name}" height="${3:50%}" width="${4:50%}" />
+</center>
+endsnippet
+
+snippet '(?<!\\)([0-9])([0-9])tb' "Insert A Table" r
+$1`!p
+x=match.group(1)
+y=match.group(2)
+row1=""
+row2=""
+for i in range(int(x)):
+	if i==0:
+		row1+="|<++>"
+	else:
+		row1+="|"
+	row2+="|:-:"
+row1+="|\n"
+row2+="|\n"
+out=row1+row2+int(y)*row1
+snip.rv=out
+`
+endsnippet
+

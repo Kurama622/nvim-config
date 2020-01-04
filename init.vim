@@ -10,9 +10,13 @@ Plug 'vim-latex/vim-latex', {'for':'tex'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'preservim/nerdcommenter'
 call plug#end()
 
 let g:coc_global_extensions = ['coc-python']
+
 let g:tex_flavor='latex'
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_SmartKeyBS=0
@@ -232,27 +236,27 @@ func! SetTitle()
 endfunc
 " =============================================== 创建文件头 ===============================================
 
-" 设置注释快捷键
-map <LEADER>' :call Note()<CR>
-func! Note()
-    if &filetype == 'python'
-        normal 0i# 
-    endif
-    if &filetype == 'vim'
-        normal 0i" 
-    endif
-    if &filetype == 'plaintex'
-        normal 0i% 
-    endif
-    if &filetype == 'tex'
-        normal 0i% 
-    endif
-    if &filetype == 'c'
-        normal 0i// 
-    endif
-endfunc
-" 设置取消注释
-map <LEADER>" 0df j
+"" 设置注释快捷键
+"map <LEADER>' :call Note()<CR>
+"func! Note()
+    "if &filetype == 'python'
+        "normal 0i# 
+    "endif
+    "if &filetype == 'vim'
+        "normal 0i" 
+    "endif
+    "if &filetype == 'plaintex'
+        "normal 0i% 
+    "endif
+    "if &filetype == 'tex'
+        "normal 0i% 
+    "endif
+    "if &filetype == 'c'
+        "normal 0i// 
+    "endif
+"endfunc
+"" 设置取消注释
+"map <LEADER>" 0df j
 
 " ========
 " ======== coc
@@ -271,6 +275,15 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition) 
 nmap <silent> gi <Plug>(coc-implementation) 
 nmap <LEADER>rn <Plug>(coc-rename)
+
+" ========
+" ======== Ultisnips
+" ========
+let g:UltiSnipsExpandTrigger = "<c-f>"
+let g:UltiSnipsJumpForwardTrigger = "<c-f>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-b>"
+let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/Ultisnips/', 'Ultisnips']
+" silent! au BufEnter,BufRead,BufNewFile * silent! unmap <>
 
 " ========
 " ======== markdown
@@ -355,49 +368,51 @@ let g:mkdp_port = ''
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
 
+" ======================================================
 " markdown加粗命令
-autocmd filetype markdown inoremap <buffer> ,b **** <++><ESC>F*hi
-" markdown斜体
-autocmd filetype markdown inoremap <buffer> ,i ** <++><ESC>F*i
-" markdown插入图片
-autocmd filetype markdown inoremap <buffer> ,f ![](<++>)<ESC>F[a
-" markdown插入链接
-autocmd filetype markdown inoremap <buffer> ,l [](<++>)<Esc>F[a
-" markdown插入数学公式
-autocmd filetype markdown inoremap <buffer> ,m $$<CR><CR>$$ <++><Esc>ki
-" markdown插入代码块
-autocmd filetype markdown inoremap <buffer> ,c ```<CR>``` <++><Esc>k$a
-" markdown插入图片(html)
-autocmd filetype markdown inoremap <buffer> ,h <Esc>:call Imagehtml()<CR>2jf"a
-function! Imagehtml()
-        if &filetype == 'markdown'
-                call append(line("."), "<center>")
-                call append(line(".")+1, "<img src=\"\" alt=\"<++>\" height=\"50%\" width=\"50%\" />")
-                call append(line(".")+2, "</center>")
-        endif
-endfunction
-autocmd filetype markdown map <buffer> ; :call InsertString()<CR>
-function! InsertString()
-        if getline(".")[col(".")-2] == '|'
-                normal i <++> | 
-        else
-                normal i| <++> | 
-        endif
-endfunction
+" autocmd filetype markdown inoremap <buffer> ,b **** <++><ESC>F*hi
+" " markdown斜体
+" autocmd filetype markdown inoremap <buffer> ,i ** <++><ESC>F*i
+" " markdown插入图片
+" autocmd filetype markdown inoremap <buffer> ,f ![](<++>)<ESC>F[a
+" " markdown插入链接
+" autocmd filetype markdown inoremap <buffer> ,l [](<++>)<Esc>F[a
+" " markdown插入数学公式
+" autocmd filetype markdown inoremap <buffer> ,m $$<CR><CR>$$ <++><Esc>ki
+" " markdown插入代码块
+" autocmd filetype markdown inoremap <buffer> ,c ```<CR>``` <++><Esc>k$a
+" " markdown插入图片(html)
+" autocmd filetype markdown inoremap <buffer> ,h <Esc>:call Imagehtml()<CR>2jf"a
+" function! Imagehtml()
+"         if &filetype == 'markdown'
+"                 call append(line("."), "<center>")
+"                 call append(line(".")+1, "<img src=\"\" alt=\"<++>\" height=\"50%\" width=\"50%\" />")
+"                 call append(line(".")+2, "</center>")
+"         endif
+" endfunction
+" autocmd filetype markdown map <buffer> ; :call InsertString()<CR>
+" function! InsertString()
+"         if getline(".")[col(".")-2] == '|'
+"                 normal i <++> | 
+"         else
+"                 normal i| <++> | 
+"         endif
+" endfunction
+" 
+" autocmd filetype markdown inoremap <buffer> ,t <ESC>:call InsertTable()<CR>
+" function! InsertTable()
+"         call append(line("."), "| <++> | <++> | ")
+"         call append(line(".")+1, "| :--: | :--: | ")
+"         call append(line(".")+2, "| <++> | <++> | ")
+" endfunction
 
-autocmd filetype markdown inoremap <buffer> ,t <ESC>:call InsertTable()<CR>
-function! InsertTable()
-        call append(line("."), "| <++> | <++> | ")
-        call append(line(".")+1, "| :--: | :--: | ")
-        call append(line(".")+2, "| <++> | <++> | ")
-endfunction
-
-autocmd filetype markdown map <buffer> 3t :call InsertTable3()<CR>
-function! InsertTable3()
-        call append(line("."), "| <++> | <++> | <++> | ")
-        call append(line(".")+1, "| :--: | :--: | :--: | ")
-        call append(line(".")+2, "| <++> | <++> | <++> | ")
-endfunction
+" autocmd filetype markdown map <buffer> 3t :call InsertTable3()<CR>
+" function! InsertTable3()
+"         call append(line("."), "| <++> | <++> | <++> | ")
+"         call append(line(".")+1, "| :--: | :--: | :--: | ")
+"         call append(line(".")+2, "| <++> | <++> | <++> | ")
+" endfunction
+" ======================================================
 let g:table_mode_corner='|'
 let g:table_mode_corner_corner='+'
 noremap <LEADER>tm :TableModeToggle<CR>
@@ -415,18 +430,51 @@ autocmd filetype tex,plaintex inoremap <buffer> ,m \[<CR><CR>\]<CR><CR><++><Esc>
 autocmd filetype tex,plaintex inoremap <buffer> ,e \begin{equation}<CR><CR>\end{equation}<Esc>0kk
 autocmd filetype tex,plaintex inoremap <buffer> <F1> \begin{<++>}<CR><CR>\end{<++>}<Esc>0kk
 autocmd filetype tex,plaintex nmap <buffer> <F10> :LLPStartPreview<CR>
+nmap <CR> o<Esc>
 " autocmd filetype tex,plaintex nmap <buffer> <F10> :call Tex_ViewLaTeX()<CR>
 
 " =======
 " ======= python
 " =======
-autocmd filetype python inoremap <buffer> ,' """<CR><CR>"""<CR><++><Esc>2ki
+" autocmd filetype python inoremap <buffer> ,' """<CR><CR>"""<CR><++><Esc>2ki
 
 " =======
 " ======= runcode
 " =======
 map <F5> :call RunCode()<CR>
 func! RunCode()
+    exec "w"
+    if &filetype == 'python'
+        set splitright
+        :vsp
+"         set splitbelow
+"         :sp
+        :term python3 %
+        normal i
+    endif
+
+    if &filetype == 'r'
+        set splitright
+        :vsp
+        :term Rscript %
+        normal i
+        if filereadable('Rplots.pdf')
+            exec "!zathura Rplots.pdf &"
+        endif
+    endif
+
+    if &filetype == 'dot'
+    exec "!dot % -T png -o %.png"
+    exec "!feh %.png"
+    endif
+
+    if &filetype == 'markdown'
+        exec "MarkdownPreview"
+    endif
+endfunc
+
+map <F17> :call RunCodeRepl()<CR>
+func! RunCodeRepl()
     exec "w"
     if &filetype == 'python'
             if search("@profile")
@@ -443,7 +491,6 @@ func! RunCode()
                     exec "wincmd p"
             endif
     endif
-
     if &filetype == 'r'
         exec "AsyncRun -raw Rscript %"
         exec "copen"
@@ -451,24 +498,5 @@ func! RunCode()
         if filereadable('Rplots.pdf')
             exec "!zathura Rplots.pdf &"
         endif
-    endif
-    if &filetype == 'dot'
-    exec "!dot % -T png -o %.png"
-    exec "!feh %.png"
-    endif
-
-    if &filetype == 'markdown'
-        exec "MarkdownPreview"
-    endif
-endfunc
-
-map <F17> :call RunCodeRepl()<CR>
-func! RunCodeRepl()
-    exec "w"
-    if &filetype == 'python'
-        set splitright
-        :vsp
-        :term python3 %
-        normal i
     endif
 endfunc
