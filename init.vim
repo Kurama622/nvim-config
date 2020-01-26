@@ -17,32 +17,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
-let g:coc_global_extensions = ['coc-python','coc-snippets','coc-css']
-let g:tex_flavor='latex'
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_SmartKeyBS=0
-let g:Tex_ViewRule_pdf = 'zathura'
-"let g:Tex_ViewRule_pdf = 'okular'
-"let g:Tex_CompileRule_dvi='latex -src-specials -interaction=nonstopmode $*'
-"let g:Tex_ViewRule_dvi="xdvi -editor 'gvim --servername latex-suite --remote-silent'"
-
-call SingleCompile#SetCompilerTemplate('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex', 'XeLatex',
-            \ '/usr/local/texlive/2019/bin/x86_64-linux/xelatex', '',
-            \ SingleCompile#GetDefaultOpenCommand() .
-            \ ' "$(FILE_TITLE)$.pdf"')
-call SingleCompile#ChooseCompiler('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex')
-"nmap <F6> :!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex<CR>:LLPStartPreview<CR>
-nmap <F6> :SCCompile<CR>:LLPStartPreview<CR>
-"imap <F6> <Esc>:SCCompile<CR>:LLPStartPreview<CR>
-let g:livepreview_previewer='zathura'
-"let g:livepreview_previewer='okular'
-autocmd Filetype tex,plaintex setl updatetime=1
-let g:livepreview_engine='/usr/local/texlive/2019/bin/x86_64-linux/xelatex'
-let g:livepreview_cursorhold_recompile=0
-set conceallevel=1
-let g:tex_conceal='abdmg'
-let g:Tex_FoldedSections=''
-
 " =============================================== 插件配置 ===============================================
 
 "colorscheme molokai
@@ -269,31 +243,72 @@ func! SetTitle()
 endfunc
 " =============================================== 创建文件头 ===============================================
 
-"" 设置注释快捷键
-"map <LEADER>' :call Note()<CR>
-"func! Note()
-    "if &filetype == 'python'
-        "normal 0i# 
-    "endif
-    "if &filetype == 'vim'
-        "normal 0i" 
-    "endif
-    "if &filetype == 'plaintex'
-        "normal 0i% 
-    "endif
-    "if &filetype == 'tex'
-        "normal 0i% 
-    "endif
-    "if &filetype == 'c'
-        "normal 0i// 
-    "endif
-"endfunc
-"" 设置取消注释
-"map <LEADER>" 0df j
+"|==========================================================================================================
+"|                                             |    废弃区    |
+"|                                             ~~~~~~~~~~~~~~~~
+"|" 设置注释快捷键
+"|map <LEADER>' :call Note()<CR>
+"|func! Note()
+"|    if &filetype == 'python'
+"|        normal 0i# 
+"|    endif
+"|    if &filetype == 'vim'
+"|        normal 0i" 
+"|    endif
+"|    if &filetype == 'plaintex'
+"|        normal 0i% 
+"|    endif
+"|    if &filetype == 'tex'
+"|        normal 0i% 
+"|    endif
+"|    if &filetype == 'c'
+"|        normal 0i// 
+"|    endif
+"|endfunc
+"|" 设置取消注释
+"|map <LEADER>" 0df j
+"|==========================================================================================================
+
+" =========
+" ========= vim-latex
+" =========
+let g:tex_flavor='latex'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_SmartKeyBS=0
+let g:Tex_ViewRule_pdf = 'zathura'
+"let g:Tex_ViewRule_pdf = 'okular'
+"let g:Tex_CompileRule_dvi='latex -src-specials -interaction=nonstopmode $*'
+"let g:Tex_ViewRule_dvi="xdvi -editor 'gvim --servername latex-suite --remote-silent'"
+
+" ========
+" ======== SingleCompile
+" ========
+call SingleCompile#SetCompilerTemplate('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex', 'XeLatex',
+            \ '/usr/local/texlive/2019/bin/x86_64-linux/xelatex', '',
+            \ SingleCompile#GetDefaultOpenCommand() .
+            \ ' "$(FILE_TITLE)$.pdf"')
+call SingleCompile#ChooseCompiler('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex')
+"nmap <F6> :!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex<CR>:LLPStartPreview<CR>
+nmap <F6> :SCCompile<CR>:LLPStartPreview<CR>
+"imap <F6> <Esc>:SCCompile<CR>:LLPStartPreview<CR>
+
+" ========
+" ======== vim-latex-live-preview
+" ========
+let g:livepreview_previewer='zathura'
+"let g:livepreview_previewer='okular'
+autocmd Filetype tex,plaintex setl updatetime=1
+let g:livepreview_engine='/usr/local/texlive/2019/bin/x86_64-linux/xelatex'
+let g:livepreview_cursorhold_recompile=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+let g:Tex_FoldedSections=''
 
 " ========
 " ======== coc
 " ========
+let g:coc_global_extensions = ['coc-python','coc-snippets','coc-css']
+
 function! s:check_back_space() abort
         let col = col('.') - 1
         return !col || getline('.')[col - 1] =~ '\s'
@@ -331,7 +346,6 @@ endfunction
 
 let g:coc_snippet_next = '<A-tab>'
 let g:coc_snippet_prev = '<S-tab>'
-
 
 nmap <silent> gd <Plug>(coc-definition) 
 nmap <silent> gy <Plug>(coc-type-definition) 
@@ -430,57 +444,60 @@ let g:mkdp_port = ''
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '${name}'
 
-" ======================================================
-" markdown加粗命令
-" autocmd filetype markdown inoremap <buffer> ,b **** <++><ESC>F*hi
-" " markdown斜体
-" autocmd filetype markdown inoremap <buffer> ,i ** <++><ESC>F*i
-" " markdown插入图片
-" autocmd filetype markdown inoremap <buffer> ,f ![](<++>)<ESC>F[a
-" " markdown插入链接
-" autocmd filetype markdown inoremap <buffer> ,l [](<++>)<Esc>F[a
-" " markdown插入数学公式
-" autocmd filetype markdown inoremap <buffer> ,m $$<CR><CR>$$ <++><Esc>ki
-" " markdown插入代码块
-" autocmd filetype markdown inoremap <buffer> ,c ```<CR>``` <++><Esc>k$a
-" " markdown插入图片(html)
-" autocmd filetype markdown inoremap <buffer> ,h <Esc>:call Imagehtml()<CR>2jf"a
-" function! Imagehtml()
-"         if &filetype == 'markdown'
-"                 call append(line("."), "<center>")
-"                 call append(line(".")+1, "<img src=\"\" alt=\"<++>\" height=\"50%\" width=\"50%\" />")
-"                 call append(line(".")+2, "</center>")
-"         endif
-" endfunction
-" autocmd filetype markdown map <buffer> ; :call InsertString()<CR>
-" function! InsertString()
-"         if getline(".")[col(".")-2] == '|'
-"                 normal i <++> | 
-"         else
-"                 normal i| <++> | 
-"         endif
-" endfunction
-"
-" autocmd filetype markdown inoremap <buffer> ,t <ESC>:call InsertTable()<CR>
-" function! InsertTable()
-"         call append(line("."), "| <++> | <++> | ")
-"         call append(line(".")+1, "| :--: | :--: | ")
-"         call append(line(".")+2, "| <++> | <++> | ")
-" endfunction
-
-" autocmd filetype markdown map <buffer> 3t :call InsertTable3()<CR>
-" function! InsertTable3()
-"         call append(line("."), "| <++> | <++> | <++> | ")
-"         call append(line(".")+1, "| :--: | :--: | :--: | ")
-"         call append(line(".")+2, "| <++> | <++> | <++> | ")
-" endfunction
-" ======================================================
+"|==========================================================================================================
+"|                                             |        废弃区      |
+"|                                             ~~~~~~~~~~~~~~~~~~~~~~
+"|markdown加粗命令
+"|autocmd filetype markdown inoremap <buffer> ,b **** <++><ESC>F*hi
+"|" markdown斜体
+"|autocmd filetype markdown inoremap <buffer> ,i ** <++><ESC>F*i
+"|" markdown插入图片
+"|autocmd filetype markdown inoremap <buffer> ,f ![](<++>)<ESC>F[a
+"|" markdown插入链接
+"|autocmd filetype markdown inoremap <buffer> ,l [](<++>)<Esc>F[a
+"|" markdown插入数学公式
+"|autocmd filetype markdown inoremap <buffer> ,m $$<CR><CR>$$ <++><Esc>ki
+"|" markdown插入代码块
+"|autocmd filetype markdown inoremap <buffer> ,c ```<CR>``` <++><Esc>k$a
+"|" markdown插入图片(html)
+"|autocmd filetype markdown inoremap <buffer> ,h <Esc>:call Imagehtml()<CR>2jf"a
+"|function! Imagehtml()
+"|        if &filetype == 'markdown'
+"|                call append(line("."), "<center>")
+"|                call append(line(".")+1, "<img src=\"\" alt=\"<++>\" height=\"50%\" width=\"50%\" />")
+"|                call append(line(".")+2, "</center>")
+"|        endif
+"|endfunction
+"|autocmd filetype markdown map <buffer> ; :call InsertString()<CR>
+"|function! InsertString()
+"|        if getline(".")[col(".")-2] == '|'
+"|                normal i <++> | 
+"|        else
+"|                normal i| <++> | 
+"|        endif
+"|endfunction
+"|
+"|autocmd filetype markdown inoremap <buffer> ,t <ESC>:call InsertTable()<CR>
+"|function! InsertTable()
+"|        call append(line("."), "| <++> | <++> | ")
+"|        call append(line(".")+1, "| :--: | :--: | ")
+"|        call append(line(".")+2, "| <++> | <++> | ")
+"|endfunction
+"|
+"|autocmd filetype markdown map <buffer> 3t :call InsertTable3()<CR>
+"|function! InsertTable3()
+"|        call append(line("."), "| <++> | <++> | <++> | ")
+"|        call append(line(".")+1, "| :--: | :--: | :--: | ")
+"|        call append(line(".")+2, "| <++> | <++> | <++> | ")
+"|endfunction
+"|==========================================================================================================
 let g:table_mode_corner='|'
 let g:table_mode_corner_corner='|'
 noremap <LEADER>tm :TableModeToggle<CR>
-" =======
-" ======= LaTeX
-" =======
+
+" ========
+" ======== LaTeX
+" ========
 "autocmd filetype tex,plaintex inoremap <buffer> ,1 \section{}<CR><++><Esc>kf{a
 "autocmd filetype tex,plaintex inoremap <buffer> ,2 \subsection{}<CR><++><Esc>kf{a
 "autocmd filetype tex,plaintex inoremap <buffer> ,3 \subsubsection{}<CR><++><Esc>kf{a
@@ -495,14 +512,14 @@ autocmd filetype tex,plaintex nmap <buffer> <F10> :LLPStartPreview<CR>
 
 " autocmd filetype tex,plaintex nmap <buffer> <F10> :call Tex_ViewLaTeX()<CR>
 
-" =======
-" ======= python
-" =======
+" ========
+" ======== python
+" ========
 " autocmd filetype python inoremap <buffer> ,' """<CR><CR>"""<CR><++><Esc>2ki
 
-" =======
-" ======= fzf
-" =======
+" ========
+" ======== fzf
+" ========
 
 " find file
 noremap \ :FZF<CR>
@@ -532,9 +549,9 @@ command! -bang -nargs=* LinesWithPreview
 
 command! -bang -nargs=* MRU call fzf#vim#history(fzf#vim#with_preview())
 
-" =======
-" ======= runcode
-" =======
+" ========
+" ======== runcode
+" ========
 map <F5> :call RunCode()<CR>
 func! RunCode()
     exec "w"
