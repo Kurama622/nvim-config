@@ -1,0 +1,183 @@
+body{
+    font-family: 'Times New Roman','Microsoft YaHei';
+    font-size: 16px;
+}
+
+/* =================================================*/
+h1,h2,h3,h4{
+    font-style: bold;
+}
+h1 {
+  font-size: 28px;
+  color: #000080;
+  margin:8px 0 16px;
+}
+h2 {
+  font-size: 24px;
+  color: #0000CD;
+  margin:6px 0 12px;
+}
+h3 {
+  font-size: 20px;
+  color: #008080;
+  margin:4px 0 8px;
+}
+h4 {
+  font-size: 18px;
+  color: #00BFFF;
+  margin:2px 0 4px;
+}
+
+/* p,a,,hr,list,table*/
+/* =================================================*/
+/*<blockquote> 标签定义摘自另一个源的块引用。浏览器
+通常会对 <blockquote> 元素进行缩进。
+*/
+blockquote {
+    font-style: italic;
+    border-left: 5px solid;
+    margin-left: 2em;
+    padding-left: 1em;
+}
+
+p {
+    margin-bottom: 1.5em;
+}
+
+hr {
+    clear: both;
+    margin: 15px 0;
+    height: 0px;
+    overflow: hidden;
+    border: none;
+    background: transparent;
+    border-bottom: 4px solid #ddd;
+    padding: 0;
+}
+
+a {
+    color: #b58900;
+    text-decoration: none;
+}
+a:focus {
+    outline: thin dotted;
+}
+a:active,a:hover {
+    outline: 0;
+}
+a:hover {
+    color: #cb4b16;
+    text-decoration: underline;
+}
+a:visited {
+    color: #cb4b16;
+}
+
+ul,
+ol li {
+    list-style-type: decimal;
+    list-style-position: outside;
+}
+ul li {
+    list-style-type: disc;
+    list-style-position: outside;
+}
+
+/* tables */
+table thead, table tr {
+border-top-width: 1px;
+border-top-style: solid;
+border-top-color: rgb(235, 242, 224);
+}
+table {
+border-bottom-width: 1px;
+border-bottom-style: solid;
+border-bottom-color: rgb(235, 242, 224);
+}
+
+/* Padding and font style */
+table td, table th {
+padding: 5px 10px;
+font-size: 20px;
+font-family: 'Times New Roman';
+font-style: italic;
+color: #000;
+}
+
+/* Alternating background colors */
+table tr:nth-child(even) {
+background: #E6EED6
+}
+table tr:nth-child(odd) {
+background: #FFF
+}
+table th {
+background: #E6EED6
+}
+
+/* code */
+/* =======================================*/
+pre{
+    border-radius: .3em;
+    font-family:'DejaVu Sans Mono';
+    margin: .5em 0;
+    overflow: auto;
+    padding: 1em;
+    background-color: #282c34;
+}
+
+p.source-line>code{
+    color:red;
+    background:#FFF;
+}
+
+code{
+    font-family:'DejaVu Sans Mono';
+    line-height: 22px;
+    color:#C0C0C0;
+}
+span{
+    font-family:'DejaVu Sans Mono';
+}
+
+span.hljs-keyword {
+    color: #c678dd;
+}
+span.hljs-function>span.hljs-title {
+    color: #61aeee;
+}
+span.hljs-class>span.hljs-title {
+    color: #61aeee;
+}
+span.hljs-comment {
+    color: #5c6370;
+}
+span.hljs-string {
+    color: #690;
+}
+span.hljs-number {
+    /*color: #B8860B;*/
+    color: #BC8F8F;
+}
+span.hljs-params {
+    color: #D2691E;
+}
+
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+width:12px;
+}
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+-webkit-box-shadow:inset006pxrgba(0,0,0,0.3);
+border-radius:10px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+border-radius:10px;
+background:rgba(0,0,0,0.1);
+-webkit-box-shadow:inset006pxrgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+background:rgba(255,0,0,0.4);
+}

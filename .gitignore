@@ -2,4 +2,4 @@
 colors/molokai.vim
 plugged
 autoload/plug.vim
-
+tmp

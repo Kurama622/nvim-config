@@ -13,34 +13,42 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'preservim/nerdcommenter'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
-let g:coc_global_extensions = ['coc-python']
-
+let g:coc_global_extensions = ['coc-python','coc-snippets','coc-css']
 let g:tex_flavor='latex'
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_SmartKeyBS=0
 let g:Tex_ViewRule_pdf = 'zathura'
+"let g:Tex_ViewRule_pdf = 'okular'
+"let g:Tex_CompileRule_dvi='latex -src-specials -interaction=nonstopmode $*'
+"let g:Tex_ViewRule_dvi="xdvi -editor 'gvim --servername latex-suite --remote-silent'"
 
 call SingleCompile#SetCompilerTemplate('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex', 'XeLatex',
             \ '/usr/local/texlive/2019/bin/x86_64-linux/xelatex', '',
             \ SingleCompile#GetDefaultOpenCommand() .
             \ ' "$(FILE_TITLE)$.pdf"')
 call SingleCompile#ChooseCompiler('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex')
-nmap <F6> :SCCompile<CR>
-imap <F6> :SCCompile<CR>
+"nmap <F6> :!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex<CR>:LLPStartPreview<CR>
+nmap <F6> :SCCompile<CR>:LLPStartPreview<CR>
+"imap <F6> <Esc>:SCCompile<CR>:LLPStartPreview<CR>
 let g:livepreview_previewer='zathura'
+"let g:livepreview_previewer='okular'
 autocmd Filetype tex,plaintex setl updatetime=1
 let g:livepreview_engine='/usr/local/texlive/2019/bin/x86_64-linux/xelatex'
 let g:livepreview_cursorhold_recompile=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
 let g:Tex_FoldedSections=''
+
 " =============================================== 插件配置 ===============================================
 
-" colorscheme molokai
-" set background=dark
-colorscheme mycolor
+"colorscheme molokai
+"set background=dark
+colorscheme vegeta
+"colorscheme xcodedark
 set t_Co=256                                                    " 开启256色支持
 syntax on
 filetype plugin indent on
@@ -52,10 +60,13 @@ set nocompatible                                                " 不以兼容�
 set fileencodings=ucs-bom,utf-8,gb2313,gb18030,gbk,cp936,latin1
 set fileformats=unix,dos,mac
 set helplang=cn                                                 " 中文帮助文档
-set relativenumber                                                      " 显示行号
+set nomodeline
+set relativenumber                                              " 相对行号
+set number                                                      " 绝对行号
 set wrap                                                        " 自动换行
 set showcmd                                                     " 显示输入信息
 set cursorline                                                  " 显示光标所在行
+set cursorcolumn                                                " 显示光标所在列
 set wildmenu                                                    " 显示补全提示
 set hlsearch                                                    " 高亮搜索结果
 " set foldenable                                                " 允许折叠
@@ -77,16 +88,16 @@ set smartcase                                                   " 智能大小�
 set laststatus=2                                                " 设置状态栏在倒数第2行
 
 " ======================================== 设置状态栏格式 ========================================
-set statusline=%1*\%<%.50F\                                     "显示文件名和文件路径
-set statusline+=%=%2*\%y%m%r%h%w\ %*                            "显示文件类型及文件状态
-set statusline+=%3*\%{&ff}\[%{&fenc}]\ %*                       "显示文件编码类型
-set statusline+=%4*\ row:%l/%L,col:%c\ %*                       "显示光标所在行和列
-set statusline+=%5*\%3p%%\%*                                    "显示光标前文本所占总文本的比例
-hi User1 cterm=none ctermfg=25 ctermbg=0
-hi User2 cterm=none ctermfg=208 ctermbg=0
-hi User3 cterm=none ctermfg=169 ctermbg=0
-hi User4 cterm=none ctermfg=100 ctermbg=0
-hi User5 cterm=none ctermfg=green ctermbg=0
+"set statusline=%1*\%<%.50F\                                     "显示文件名和文件路径
+"set statusline+=%=%2*\%y%m%r%h%w\ %*                            "显示文件类型及文件状态
+"set statusline+=%3*\%{&ff}\[%{&fenc}]\ %*                       "显示文件编码类型
+""set statusline+=%4*\ row:%l/%L,col:%c\ %*                       "显示光标所在行和列
+"set statusline+=%5*\%3p%%\%*                                    "显示光标前文本所占总文本的比例
+"hi User1 cterm=none ctermfg=12 ctermbg=0
+"hi User2 cterm=none ctermfg=208 ctermbg=0
+"hi User3 cterm=none ctermfg=169 ctermbg=0
+""hi User4 cterm=none ctermfg=100 ctermbg=0
+"hi User5 cterm=none ctermfg=green ctermbg=0
 " ======================================== 设置状态栏格式 ========================================
 
 set mouse=a                                                     " 启用鼠标
@@ -124,6 +135,16 @@ map <LEADER>k <C-w>k
 map <LEADER>j <C-w>j
 " 光标移至左窗口
 map <LEADER>h <C-w>h
+
+" 当前窗口移至右边
+map <LEADER>L <C-w>L
+" 当前窗口移至上边
+map <LEADER>K <C-w>K
+" 当前窗口移至下边
+map <LEADER>J <C-w>J
+" 当前窗口移至左边
+map <LEADER>H <C-w>H
+
 " 窗口上移
 map <up> :res +5<CR>
 " 窗口下移
@@ -154,8 +175,20 @@ map +y "+y
 " 从系统剪切板粘贴
 map +p "+p
 " 插入模式下jj映射为<Esc>
-inoremap jj <Esc>
+"inoremap jj <Esc>
+nmap <CR> o<Esc>
 
+" 关闭nvim保存编辑记录
+silent !mkdir -p ~/.config/nvim/tmp/backup
+silent !mkdir -p ~/.config/nvim/tmp/undo
+set backupdir=~/.config/nvim/tmp/backup,.
+set directory=~/.config/nvim/tmp/backup,.
+if has('persistent_undo')
+    set undofile
+    set undodir=~/.config/nvim/tmp/undo,.
+endif
+
+" 显示tab键和空格键
 set list
 set listchars=tab:▸\ ,trail:▫
 
@@ -271,6 +304,35 @@ inoremap <silent><expr> <Tab>
       \ coc#refresh()
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+"" Use <C-l> for trigger snippet expand.
+"imap <C-l> <Plug>(coc-snippets-expand)
+
+"" Use <C-j> for select text for visual placeholder of snippet.
+"vmap <C-j> <Plug>(coc-snippets-select)
+
+"" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+"let g:coc_snippet_next = '<c-j>'
+
+"" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+"let g:coc_snippet_prev = '<c-k>'
+
+"" Use <C-j> for both expand and jump (make expand higher priority.)
+"imap <C-j> <Plug>(coc-snippets-expand-jump)
+inoremap <silent><expr> <A-TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<A-tab>'
+let g:coc_snippet_prev = '<S-tab>'
+
+
 nmap <silent> gd <Plug>(coc-definition) 
 nmap <silent> gy <Plug>(coc-type-definition) 
 nmap <silent> gi <Plug>(coc-implementation) 
@@ -280,8 +342,8 @@ nmap <LEADER>rn <Plug>(coc-rename)
 " ======== Ultisnips
 " ========
 let g:UltiSnipsExpandTrigger = "<c-f>"
-let g:UltiSnipsJumpForwardTrigger = "<c-f>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-b>"
+"let g:UltiSnipsJumpForwardTrigger = "<c-f>"
+"let g:UltiSnipsJumpBackwardTrigger = "<c-b>"
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/Ultisnips/', 'Ultisnips']
 " silent! au BufEnter,BufRead,BufNewFile * silent! unmap <>
 
@@ -356,7 +418,7 @@ let g:mkdp_preview_options = {
     \ }
 
 " use a custom markdown style must be absolute path
-let g:mkdp_markdown_css = ''
+let g:mkdp_markdown_css = '/home/vegeta/.config/nvim/MDtheme/usr.css'
 
 " use a custom highlight style must absolute path
 let g:mkdp_highlight_css = ''
@@ -366,7 +428,7 @@ let g:mkdp_port = ''
 
 " preview page title
 " ${name} will be replace with the file name
-let g:mkdp_page_title = '「${name}」'
+let g:mkdp_page_title = '${name}'
 
 " ======================================================
 " markdown加粗命令
@@ -398,7 +460,7 @@ let g:mkdp_page_title = '「${name}」'
 "                 normal i| <++> | 
 "         endif
 " endfunction
-" 
+"
 " autocmd filetype markdown inoremap <buffer> ,t <ESC>:call InsertTable()<CR>
 " function! InsertTable()
 "         call append(line("."), "| <++> | <++> | ")
@@ -414,14 +476,14 @@ let g:mkdp_page_title = '「${name}」'
 " endfunction
 " ======================================================
 let g:table_mode_corner='|'
-let g:table_mode_corner_corner='+'
+let g:table_mode_corner_corner='|'
 noremap <LEADER>tm :TableModeToggle<CR>
 " =======
 " ======= LaTeX
 " =======
-autocmd filetype tex,plaintex inoremap <buffer> ,1 \section{}<CR><++><Esc>kf{a
-autocmd filetype tex,plaintex inoremap <buffer> ,2 \subsection{}<CR><++><Esc>kf{a
-autocmd filetype tex,plaintex inoremap <buffer> ,3 \subsubsection{}<CR><++><Esc>kf{a
+"autocmd filetype tex,plaintex inoremap <buffer> ,1 \section{}<CR><++><Esc>kf{a
+"autocmd filetype tex,plaintex inoremap <buffer> ,2 \subsection{}<CR><++><Esc>kf{a
+"autocmd filetype tex,plaintex inoremap <buffer> ,3 \subsubsection{}<CR><++><Esc>kf{a
 autocmd filetype tex,plaintex inoremap <buffer> ,b \textbf{}<++><Esc>4hi
 autocmd filetype tex,plaintex inoremap <buffer> ,i \textit{}<++><Esc>4hi
 autocmd filetype tex,plaintex inoremap <buffer> ,f \begin{figure}[<++>]<CR>\centering<CR>\includegraphics[scale=<++>]{<++>}<CR>\caption{<++>}<CR>\end{figure}<CR><++><Esc>5k
@@ -430,13 +492,45 @@ autocmd filetype tex,plaintex inoremap <buffer> ,m \[<CR><CR>\]<CR><CR><++><Esc>
 autocmd filetype tex,plaintex inoremap <buffer> ,e \begin{equation}<CR><CR>\end{equation}<Esc>0kk
 autocmd filetype tex,plaintex inoremap <buffer> <F1> \begin{<++>}<CR><CR>\end{<++>}<Esc>0kk
 autocmd filetype tex,plaintex nmap <buffer> <F10> :LLPStartPreview<CR>
-nmap <CR> o<Esc>
+
 " autocmd filetype tex,plaintex nmap <buffer> <F10> :call Tex_ViewLaTeX()<CR>
 
 " =======
 " ======= python
 " =======
 " autocmd filetype python inoremap <buffer> ,' """<CR><CR>"""<CR><++><Esc>2ki
+
+" =======
+" ======= fzf
+" =======
+
+" find file
+noremap \ :FZF<CR>
+" find history
+noremap <C-h> :MRU<CR>
+" find lines containing keywords
+noremap <C-l> :LinesWithPreview<CR>
+" find buffer
+noremap <C-b> :Buffers<CR>
+
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 ruler
+
+command! -bang -nargs=* Buffers
+  \ call fzf#vim#buffers(
+  \   '',
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:0%', '?'),
+  \   <bang>0)
+
+command! -bang -nargs=* LinesWithPreview
+    \ call fzf#vim#grep(
+    \   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
+    \   fzf#vim#with_preview({'options': '--delimiter : --nth 4.. --sort'}, 'up:50%', '?'),
+    \   1)
+
+command! -bang -nargs=* MRU call fzf#vim#history(fzf#vim#with_preview())
 
 " =======
 " ======= runcode
@@ -463,6 +557,24 @@ func! RunCode()
         endif
     endif
 
+    if &filetype == 'c'
+        set splitbelow
+        exec "!gcc % -Wall -o %<"
+        :sp
+        :res -10
+        :term ./%<
+        normal i
+    endif
+
+    if &filetype == 'cpp'
+        set splitbelow
+        exec "!g++ -std=c++11 % -Wall -o %<"
+        :sp
+        :res -10
+        :term ./%<
+        normal i
+    endif
+
     if &filetype == 'dot'
     exec "!dot % -T png -o %.png"
     exec "!feh %.png"
@@ -470,6 +582,12 @@ func! RunCode()
 
     if &filetype == 'markdown'
         exec "MarkdownPreview"
+    endif
+
+    if &filetype == 'tex'
+        ":SCCompile
+        :!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex
+        :LLPStartPreview
     endif
 endfunc
 
@@ -498,5 +616,8 @@ func! RunCodeRepl()
         if filereadable('Rplots.pdf')
             exec "!zathura Rplots.pdf &"
         endif
+    endif
+    if &filetype == 'tex'
+        :LLPStartPreview
     endif
 endfunc
