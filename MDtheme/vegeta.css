@@ -1,7 +1,9 @@
 /* 主页面设置*/
 *{
     font-size: 16px;
-    font-family: 'Microsoft YaHei';
+    /*font-family: Monaco;*/
+    /*font-family: Monaco, 'Microsoft YaHei';*/
+    /*font-family:'DejaVu Sans Mono';*/
     /*background-color: #E6E6FA;*/
     margin:0
 }
@@ -10,6 +12,7 @@ body{
     /*background-color: #E6E6FA;*/
     /*line-height: 1.5em;*/
     /*max-width: 960px;*/
+    font-family: "YaHei Consolas Hybrid";
     margin: 0 auto;
 }
 /* !important的作用是提高指定样式规则的应用优先权。*/
@@ -190,6 +193,12 @@ p.source-line>code{
     color:red;
     background:#FFF;
 }
+/*p.source-line{*/
+    /*font-family:Monaco;*/
+/*}*/
+/*p>li.souce-line{*/
+    /*font-family:'DejaVu Sans Mono';*/
+/*}*/
 
 code{
     font-family:'DejaVu Sans Mono';

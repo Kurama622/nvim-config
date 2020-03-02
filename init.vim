@@ -15,6 +15,7 @@ Plug 'honza/vim-snippets'
 Plug 'preservim/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'gko/vim-coloresque'
 call plug#end()
 
 " =============================================== 插件配置 ===============================================
@@ -151,6 +152,8 @@ map +p "+p
 " 插入模式下jj映射为<Esc>
 "inoremap jj <Esc>
 nmap <CR> o<Esc>
+nmap <LEADER>t :set splitright<CR>:vsplit<CR>:term<CR>
+autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>iipython<CR>
 
 " 关闭nvim保存编辑记录
 silent !mkdir -p ~/.config/nvim/tmp/backup
@@ -205,40 +208,40 @@ func! SetTitle()
         call append(line(".")+5, "##########################################################################")
         call append(line(".")+6, "<++>")
     endif
-    if &filetype == 'plaintex'
-        call setline(1,"% -*- coding:UTF-8 -*-")
-        call append(line("."),"% #########################################################################")
-        call append(line(".")+1, "% File Name: ".expand("%"))
-        call append(line(".")+2, "% Author: stubborn vegeta")
-        call append(line(".")+3, "% Created Time: ".strftime("%c"))
-        call append(line(".")+4, "% #########################################################################")
-        call append(line(".")+5, "\\documentclass[UTF8]{<++>}")
-        call append(line(".")+6, "\\usepackage{graphicx}")
-        call append(line(".")+7, "\\usepackage{booktabs}")
-        call append(line(".")+8, "\\usepackage{geometry}")
-        call append(line(".")+9, "\\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}")
-        call append(line(".")+10, "\\pagestyle{plain}")
-        call append(line(".")+11, "\\begin{document}")
-        call append(line(".")+12, "<++>")
-        call append(line(".")+13, "\\end{document}")
-    endif
-    if &filetype == 'tex'
-        call setline(1,"% -*- coding:UTF-8 -*-")
-        call append(line("."),"% #########################################################################")
-        call append(line(".")+1, "% File Name: ".expand("%"))
-        call append(line(".")+2, "% Author: stubborn vegeta")
-        call append(line(".")+3, "% Created Time: ".strftime("%c"))
-        call append(line(".")+4, "% #########################################################################")
-        call append(line(".")+5, "\\documentclass[UTF8]{<++>}")
-        call append(line(".")+6, "\\usepackage{graphicx}")
-        call append(line(".")+7, "\\usepackage{booktabs}")
-        call append(line(".")+8, "\\usepackage{geometry}")
-        call append(line(".")+9, "\\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}")
-        call append(line(".")+10, "\\pagestyle{plain}")
-        call append(line(".")+11, "\\begin{document}")
-        call append(line(".")+12, "<++>")
-        call append(line(".")+13, "\\end{document}")
-    endif
+    "if &filetype == 'plaintex'
+        "call setline(1,"% -*- coding:UTF-8 -*-")
+        "call append(line("."),"% #########################################################################")
+        "call append(line(".")+1, "% File Name: ".expand("%"))
+        "call append(line(".")+2, "% Author: stubborn vegeta")
+        "call append(line(".")+3, "% Created Time: ".strftime("%c"))
+        "call append(line(".")+4, "% #########################################################################")
+        "call append(line(".")+5, "\\documentclass[UTF8]{<++>}")
+        "call append(line(".")+6, "\\usepackage{graphicx}")
+        "call append(line(".")+7, "\\usepackage{booktabs}")
+        "call append(line(".")+8, "\\usepackage{geometry}")
+        "call append(line(".")+9, "\\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}")
+        "call append(line(".")+10, "\\pagestyle{plain}")
+        "call append(line(".")+11, "\\begin{document}")
+        "call append(line(".")+12, "<++>")
+        "call append(line(".")+13, "\\end{document}")
+    "endif
+    "if &filetype == 'tex'
+        "call setline(1,"% -*- coding:UTF-8 -*-")
+        "call append(line("."),"% #########################################################################")
+        "call append(line(".")+1, "% File Name: ".expand("%"))
+        "call append(line(".")+2, "% Author: stubborn vegeta")
+        "call append(line(".")+3, "% Created Time: ".strftime("%c"))
+        "call append(line(".")+4, "% #########################################################################")
+        "call append(line(".")+5, "\\documentclass[UTF8]{<++>}")
+        "call append(line(".")+6, "\\usepackage{graphicx}")
+        "call append(line(".")+7, "\\usepackage{booktabs}")
+        "call append(line(".")+8, "\\usepackage{geometry}")
+        "call append(line(".")+9, "\\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}")
+        "call append(line(".")+10, "\\pagestyle{plain}")
+        "call append(line(".")+11, "\\begin{document}")
+        "call append(line(".")+12, "<++>")
+        "call append(line(".")+13, "\\end{document}")
+    "endif
 "     normal G 
 endfunc
 " =============================================== 创建文件头 ===============================================
@@ -288,8 +291,8 @@ call SingleCompile#SetCompilerTemplate('tex', '/usr/local/texlive/2019/bin/x86_6
             \ SingleCompile#GetDefaultOpenCommand() .
             \ ' "$(FILE_TITLE)$.pdf"')
 call SingleCompile#ChooseCompiler('tex', '/usr/local/texlive/2019/bin/x86_64-linux/xelatex')
-"nmap <F6> :!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex<CR>:LLPStartPreview<CR>
-nmap <F6> :SCCompile<CR>:LLPStartPreview<CR>
+"nmap <F6> :SCCompile<CR>:LLPStartPreview<CR>
+nmap <F6> :SCCompile<CR>:!zathura %<.pdf &<CR>
 "imap <F6> <Esc>:SCCompile<CR>:LLPStartPreview<CR>
 
 " ========
@@ -363,6 +366,7 @@ let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/Ultisnips/', 'Ultisnip
 
 " ========
 " ======== markdown
+"
 " ========
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
@@ -397,7 +401,7 @@ let g:mkdp_open_ip = ''
 
 " specify browser to open preview page
 " default: ''
-let g:mkdp_browser = ''
+let g:mkdp_browser = 'surf'
 
 " set to 1, echo preview page url in command line when open preview page
 " default is 0
@@ -493,7 +497,7 @@ let g:mkdp_page_title = '${name}'
 "|==========================================================================================================
 let g:table_mode_corner='|'
 let g:table_mode_corner_corner='|'
-noremap <LEADER>tm :TableModeToggle<CR>
+noremap <LEADER>m :TableModeToggle<CR>
 
 " ========
 " ======== LaTeX
@@ -501,14 +505,15 @@ noremap <LEADER>tm :TableModeToggle<CR>
 "autocmd filetype tex,plaintex inoremap <buffer> ,1 \section{}<CR><++><Esc>kf{a
 "autocmd filetype tex,plaintex inoremap <buffer> ,2 \subsection{}<CR><++><Esc>kf{a
 "autocmd filetype tex,plaintex inoremap <buffer> ,3 \subsubsection{}<CR><++><Esc>kf{a
-autocmd filetype tex,plaintex inoremap <buffer> ,b \textbf{}<++><Esc>4hi
-autocmd filetype tex,plaintex inoremap <buffer> ,i \textit{}<++><Esc>4hi
-autocmd filetype tex,plaintex inoremap <buffer> ,f \begin{figure}[<++>]<CR>\centering<CR>\includegraphics[scale=<++>]{<++>}<CR>\caption{<++>}<CR>\end{figure}<CR><++><Esc>5k
-autocmd filetype tex,plaintex inoremap <buffer> ,t \begin{table}<CR>\centering<CR>\caption{<++>}<CR>\begin{tabular}{<++>}<CR><++><CR>\end{tabular}<CR>\end{table}<CR><++><Esc>7k
-autocmd filetype tex,plaintex inoremap <buffer> ,m \[<CR><CR>\]<CR><CR><++><Esc>3ki
-autocmd filetype tex,plaintex inoremap <buffer> ,e \begin{equation}<CR><CR>\end{equation}<Esc>0kk
-autocmd filetype tex,plaintex inoremap <buffer> <F1> \begin{<++>}<CR><CR>\end{<++>}<Esc>0kk
-autocmd filetype tex,plaintex nmap <buffer> <F10> :LLPStartPreview<CR>
+"
+"autocmd filetype tex,plaintex inoremap <buffer> ,b \textbf{}<++><Esc>4hi
+"autocmd filetype tex,plaintex inoremap <buffer> ,i \textit{}<++><Esc>4hi
+"autocmd filetype tex,plaintex inoremap <buffer> ,f \begin{figure}[<++>]<CR>\centering<CR>\includegraphics[scale=<++>]{<++>}<CR>\caption{<++>}<CR>\end{figure}<CR><++><Esc>5k
+"autocmd filetype tex,plaintex inoremap <buffer> ,t \begin{table}<CR>\centering<CR>\caption{<++>}<CR>\begin{tabular}{<++>}<CR><++><CR>\end{tabular}<CR>\end{table}<CR><++><Esc>7k
+"autocmd filetype tex,plaintex inoremap <buffer> ,m \[<CR><CR>\]<CR><CR><++><Esc>3ki
+"autocmd filetype tex,plaintex inoremap <buffer> ,e \begin{equation}<CR><CR>\end{equation}<Esc>0kk
+"autocmd filetype tex,plaintex inoremap <buffer> <F1> \begin{<++>}<CR><CR>\end{<++>}<Esc>0kk
+"autocmd filetype tex,plaintex nmap <buffer> <F10> :LLPStartPreview<CR>
 
 " autocmd filetype tex,plaintex nmap <buffer> <F10> :call Tex_ViewLaTeX()<CR>
 
@@ -556,17 +561,29 @@ map <F5> :call RunCode()<CR>
 func! RunCode()
     exec "w"
     if &filetype == 'python'
-        set splitright
-        :vsp
-"         set splitbelow
-"         :sp
-        :term python3 %
+        "set splitright
+        ":vsp
+        set splitbelow
+        :sp
+        :res -10
+
+        redir @a
+        silent exec "g /^#!.*python2$/ %"
+        redir END
+        if @a == ''
+            :term python2 %;echo '\n[python2]'
+        else
+            :term python3 %
+        endif
         normal i
     endif
 
     if &filetype == 'r'
-        set splitright
-        :vsp
+        "set splitright
+        ":vsp
+        set splitbelow
+        :sp
+        :res -10
         :term Rscript %
         normal i
         if filereadable('Rplots.pdf')
@@ -592,20 +609,44 @@ func! RunCode()
         normal i
     endif
 
-    if &filetype == 'dot'
-    exec "!dot % -T png -o %.png"
-    exec "!feh %.png"
-    endif
-
     if &filetype == 'markdown'
         exec "MarkdownPreview"
     endif
 
     if &filetype == 'tex'
         ":SCCompile
-        :!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex
-        :LLPStartPreview
-    endif
+        silent exec "!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex"
+        redir @a
+        silent echo system('~/.config/nvim/scripts/IsError.sh')
+        redir END
+        let Error = len(@a)
+        if Error == 1
+          silent exec "!zathura %<.pdf &"
+          ":LLPStartPreview
+        else
+          echo @a
+        endif
+      endif
+endfunc
+
+map <F29> :call RUN_latexmk()<CR>
+func! RUN_latexmk()
+    exec "w"
+    if &filetype == 'tex'
+        ":SCCompile
+        "silent exec "pkill zathura"
+        exec "!/usr/local/texlive/2019/bin/x86_64-linux/pdflatex % >/tmp/nvimlatex"
+        redir @a
+        silent echo system('~/.config/nvim/scripts/IsError.sh')
+        redir END
+        let Error = len(@a)
+        if Error == 1
+          silent exec "!zathura %<.pdf &"
+          ":LLPStartPreview
+        else
+          echo @a
+        endif
+      endif
 endfunc
 
 map <F17> :call RunCodeRepl()<CR>
@@ -638,3 +679,4 @@ func! RunCodeRepl()
         :LLPStartPreview
     endif
 endfunc
+
