@@ -2,7 +2,7 @@
 call plug#begin('~/.config/nvim/plugged')
 " Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
-Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'xuhdev/vim-latex-live-preview', {'for':'tex'}
 Plug 'xuhdev/SingleCompile'
@@ -16,6 +16,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'gko/vim-coloresque'
+Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 " =============================================== 插件配置 ===============================================
@@ -307,6 +308,34 @@ set conceallevel=1
 let g:tex_conceal='abdmg'
 let g:Tex_FoldedSections=''
 
+
+" ========
+" ======== gutentags
+" ========
+set tags=./.tags;,.tags
+
+let g:gutentags_ctags_executable = '/home/vegeta/ctags-master/ctags'
+" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+
+"let g:gutentags_trace = 1
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" 检测 ~/.cache/tags 不存在就新建
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
+
 " ========
 " ======== coc
 " ========
@@ -436,7 +465,7 @@ let g:mkdp_preview_options = {
     \ }
 
 " use a custom markdown style must be absolute path
-let g:mkdp_markdown_css = '/home/vegeta/.config/nvim/MDtheme/usr.css'
+let g:mkdp_markdown_css = '/home/vegeta/.config/nvim/MDtheme/github.css'
 
 " use a custom highlight style must absolute path
 let g:mkdp_highlight_css = ''
@@ -497,7 +526,7 @@ let g:mkdp_page_title = '${name}'
 "|==========================================================================================================
 let g:table_mode_corner='|'
 let g:table_mode_corner_corner='|'
-noremap <LEADER>m :TableModeToggle<CR>
+autocmd filetype vim,txt,markdown noremap <LEADER>m :TableModeToggle<CR>
 
 " ========
 " ======== LaTeX
@@ -552,6 +581,13 @@ command! -bang -nargs=* LinesWithPreview
     \   fzf#vim#with_preview({'options': '--delimiter : --nth 4.. --sort'}, 'up:50%', '?'),
     \   1)
 
+"command! -bang -nargs=* Ag
+    "\ call fzf#vim#ag(
+    "\   '',
+    "\   <bang>0 ? fzf#vim#with_preview('up:60%')
+    "\           : fzf#vim#with_preview('right:50%','?'),
+    "\   <bang>0)
+
 command! -bang -nargs=* MRU call fzf#vim#history(fzf#vim#with_preview())
 
 " ========
@@ -561,11 +597,11 @@ map <F5> :call RunCode()<CR>
 func! RunCode()
     exec "w"
     if &filetype == 'python'
-        "set splitright
-        ":vsp
-        set splitbelow
-        :sp
-        :res -10
+        set splitright
+        :vsp
+        "set splitbelow
+        ":sp
+        ":res -10
 
         redir @a
         silent exec "g /^#!.*python2$/ %"
