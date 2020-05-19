@@ -17,6 +17,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'gko/vim-coloresque'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 " =============================================== 插件配置 ===============================================
@@ -379,10 +380,23 @@ endfunction
 let g:coc_snippet_next = '<A-tab>'
 let g:coc_snippet_prev = '<S-tab>'
 
-nmap <silent> gd <Plug>(coc-definition) 
-nmap <silent> gy <Plug>(coc-type-definition) 
-nmap <silent> gi <Plug>(coc-implementation) 
-nmap <LEADER>rn <Plug>(coc-rename)
+"nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+"nmap <LEADER>rn <Plug>(coc-rename)
+
+" ========
+" ======== jedi-vim
+" ========
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_stubs_command = "<leader>s"
+let g:jedi#goto_definitions_command = "gd"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
+
 
 " ========
 " ======== Ultisnips
@@ -395,7 +409,6 @@ let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/Ultisnips/', 'Ultisnip
 
 " ========
 " ======== markdown
-"
 " ========
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
