@@ -340,7 +340,7 @@ endif
 " ========
 " ======== coc
 " ========
-let g:coc_global_extensions = ['coc-python','coc-snippets','coc-css']
+let g:coc_global_extensions = ['coc-python','coc-snippets','coc-css','coc-markmap']
 
 function! s:check_back_space() abort
         let col = col('.') - 1
@@ -540,6 +540,7 @@ let g:mkdp_page_title = '${name}'
 let g:table_mode_corner='|'
 let g:table_mode_corner_corner='|'
 autocmd filetype vim,txt,markdown noremap <LEADER>m :TableModeToggle<CR>
+"autocmd filetype markdown noremap <LEADER>p :!markmap --no-open %<CR>
 
 " ========
 " ======== LaTeX
@@ -726,6 +727,10 @@ func! RunCodeRepl()
     endif
     if &filetype == 'tex'
         :LLPStartPreview
+    endif
+    if &filetype == 'markdown'
+        silent exec "!markmap --no-open %"
+        silent exec "!surf %<.html"
     endif
 endfunc
 
