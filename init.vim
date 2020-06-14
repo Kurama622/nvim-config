@@ -16,8 +16,9 @@ Plug 'preservim/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'gko/vim-coloresque'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'davidhalter/jedi-vim'
+"Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python'}
 call plug#end()
 
 " =============================================== 插件配置 ===============================================
@@ -156,6 +157,7 @@ map +p "+p
 nmap <CR> o<Esc>
 nmap <LEADER>t :set splitright<CR>:vsplit<CR>:term<CR>
 autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>iipython<CR>
+autocmd filetype tex noremap <buffer> <LEADER>i :!python3 ~/scripts/pdf2img.py -i %<.pdf -f %:h -o %<<CR>
 
 " 关闭nvim保存编辑记录
 silent !mkdir -p ~/.config/nvim/tmp/backup
@@ -310,32 +312,32 @@ let g:tex_conceal='abdmg'
 let g:Tex_FoldedSections=''
 
 
-" ========
-" ======== gutentags
-" ========
-set tags=./.tags;,.tags
+"" ========
+"" ======== gutentags
+"" ========
+"set tags=./.tags;,.tags
 
-let g:gutentags_ctags_executable = '/home/vegeta/ctags-master/ctags'
-" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+"let g:gutentags_ctags_executable = '/home/vegeta/ctags-master/ctags'
+"" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+"let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
-" 所生成的数据文件的名称
-let g:gutentags_ctags_tagfile = '.tags'
+"" 所生成的数据文件的名称
+"let g:gutentags_ctags_tagfile = '.tags'
 
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let s:vim_tags = expand('~/.cache/tags')
-let g:gutentags_cache_dir = s:vim_tags
+"" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+"let s:vim_tags = expand('~/.cache/tags')
+"let g:gutentags_cache_dir = s:vim_tags
 
-"let g:gutentags_trace = 1
-" 配置 ctags 的参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+""let g:gutentags_trace = 1
+"" 配置 ctags 的参数
+"let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
-" 检测 ~/.cache/tags 不存在就新建
-if !isdirectory(s:vim_tags)
-   silent! call mkdir(s:vim_tags, 'p')
-endif
+"" 检测 ~/.cache/tags 不存在就新建
+"if !isdirectory(s:vim_tags)
+   "silent! call mkdir(s:vim_tags, 'p')
+"endif
 
 " ========
 " ======== coc
@@ -604,6 +606,41 @@ command! -bang -nargs=* LinesWithPreview
 
 command! -bang -nargs=* MRU call fzf#vim#history(fzf#vim#with_preview())
 
+" ===
+" === vimspector
+" ===
+
+"let g:python_host_prog = '/home/vegeta/anaconda3/envs/tf2.1/bin/python'
+"function! s:read_template_into_buffer(template)
+    "" has to be a function to avoid the extra space fzf#run insers otherwise
+    "execute '0r ~/.config/nvim/sample_vimspector_json/'.a:template
+"endfunction
+"command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+            "\   'source': 'ls -1 ~/.config/nvim/sample_vimspector_json',
+            "\   'down': 20,
+            "\   'sink': function('<sid>read_template_into_buffer')
+            "\ })
+"noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+"map <F1> <Plug>VimspectorContinue
+"" S-F1
+"map <F13> <Plug>VimspectorStop
+"" C-F1
+"map <F25> <Plug>VimspectorRestart
+"map <F2> <Plug>VimspectorPause
+"map <F9> <Plug>VimspectorToggleBreakpoint
+"" S-F9
+""map <F21> <Plug>VimspectorToggleConditionalBreakpoint
+"map <F21> <Plug>VimspectorAddFunctionBreakpoint
+"map <F10> <Plug>VimspectorStepOver
+"map <F11> <Plug>VimspectorStepInto
+"" S-F11
+"map <F23> <Plug>VimspectorStepOut
+
+"sign define vimspectorBP text=☛ texthl=Normal
+"sign define vimspectorBPDisabled text=☞ texthl=Normal
+"sign define vimspectorPC text=🔶 texthl=SpellBad
+
+
 " ========
 " ======== runcode
 " ========
@@ -699,6 +736,7 @@ func! RUN_latexmk()
       endif
 endfunc
 
+" Shfit + F5
 map <F17> :call RunCodeRepl()<CR>
 func! RunCodeRepl()
     exec "w"
@@ -710,7 +748,7 @@ func! RunCodeRepl()
              elseif search("set_trace()")
                      exec "!python3 %"
              else
-                    exec 'vertical rightbelow copen 50'
+                    exec 'vertical rightbelow copen 60'
                     exec 'wincmd w'
                     exec "AsyncRun -raw python3 %"
                     exec "copen"
@@ -733,4 +771,3 @@ func! RunCodeRepl()
         silent exec "!surf %<.html"
     endif
 endfunc
-
