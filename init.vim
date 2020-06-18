@@ -276,6 +276,7 @@ endfunc
 "|map <LEADER>" 0df j
 "|==========================================================================================================
 
+
 " =========
 " ========= vim-latex
 " =========
@@ -309,7 +310,8 @@ let g:livepreview_engine='/usr/local/texlive/2019/bin/x86_64-linux/xelatex'
 let g:livepreview_cursorhold_recompile=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
-let g:Tex_FoldedSections=''
+hi Conceal ctermbg=none
+"let g:Tex_FoldedSections=''
 
 
 "" ========
@@ -755,14 +757,14 @@ func! RunCodeRepl()
                     exec "wincmd p"
             endif
     endif
-    if &filetype == 'r'
-        exec "AsyncRun -raw Rscript %"
-        exec "copen"
-        exec "wincmd p"
-        if filereadable('Rplots.pdf')
-            exec "!zathura Rplots.pdf &"
-        endif
-    endif
+    "if &filetype == 'r'
+        "exec "AsyncRun -raw Rscript %"
+        "exec "copen"
+        "exec "wincmd p"
+        "if filereadable('Rplots.pdf')
+            "exec "!zathura Rplots.pdf &"
+        "endif
+    "endif
     if &filetype == 'tex'
         :LLPStartPreview
     endif
