@@ -53,3 +53,61 @@ snip.rv=out
 `
 endsnippet
 
+#snippet '([A-Za-z])(\d)' "auto subscript" wrA
+#`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+#endsnippet
+
+snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
+
+#snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Fraction" wrA
+#\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+#endsnippet
+
+
+snippet // "Fraction" iA
+\\frac{$1}{$2}$0
+endsnippet
+
+snippet / "Fraction" i
+\\frac{${VISUAL}}{$1}$0
+endsnippet
+
+snippet ds "displaystyle" i
+\\displaystyle $0
+endsnippet
+
+snippet sum "\sum" w
+\\sum_{$1}^{$2}$0
+endsnippet
+
+snippet sqrt "\sqrt" A
+\\sqrt{$1}$0
+endsnippet
+
+snippet || "||" A
+\\left\|{$1}\right\|$0
+endsnippet
+
+priority 10
+snippet "bar" "bar" iA
+\overline{$1}$0
+endsnippet
+
+priority 100
+snippet "([a-zA-Z])bar" "bar" riA
+\overline{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority 10
+snippet "vec" "\vec"  iA
+\\vec{$1}$0
+endsnippet
+
+priority 100
+#snippet "([a-zA-Z])vec" "vec" "re.match('^$',snip.buffer[snip.line+1]) or re.match('^$',snip.buffer[snip.line-2]) or  re.match('^$',snip.buffer[snip.line-1])" rAe
+snippet "([a-zA-Z])vec" "vec" riA
+\\vec{`!p snip.rv=match.group(1)`}
+endsnippet
+

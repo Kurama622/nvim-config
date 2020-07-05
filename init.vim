@@ -370,6 +370,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 "" Use <C-j> for both expand and jump (make expand higher priority.)
 "imap <C-j> <Plug>(coc-snippets-expand-jump)
+
 inoremap <silent><expr> <A-TAB>
       \ pumvisible() ? coc#_select_confirm() :
       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
@@ -381,8 +382,8 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:coc_snippet_next = '<A-tab>'
-let g:coc_snippet_prev = '<S-tab>'
+let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_prev = '<c-k>'
 
 "nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -405,9 +406,9 @@ let g:jedi#rename_command = "<leader>r"
 " ========
 " ======== Ultisnips
 " ========
-let g:UltiSnipsExpandTrigger = "<c-f>"
-"let g:UltiSnipsJumpForwardTrigger = "<c-f>"
-"let g:UltiSnipsJumpBackwardTrigger = "<c-b>"
+let g:UltiSnipsExpandTrigger = "<c-e>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/Ultisnips/', 'Ultisnips']
 " silent! au BufEnter,BufRead,BufNewFile * silent! unmap <>
 
