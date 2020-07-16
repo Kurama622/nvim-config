@@ -774,3 +774,5 @@ func! RunCodeRepl()
         silent exec "!surf %<.html"
     endif
 endfunc
+
+vnoremap <LEADER>\ ::yank +<CR>:!bash ~/scripts/code2image/code2image.sh %:h %<<CR>
