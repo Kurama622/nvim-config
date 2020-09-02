@@ -278,7 +278,7 @@ snippet pages "pagestyle" bA
 \pagestyle{${1:plain}}
 endsnippet
 
-snippet beg "\begin{}...\end{}" w
+snippet beg "\begin{}...\end{}" wb
 \begin{$1}
   $2
 \end{$1}
@@ -310,7 +310,7 @@ snippet ooo "\infty" iA
 \infty
 endsnippet
 
-snippet (^@)>> ">>" iA
+snippet >> ">>" iA
 \gg
 endsnippet
 
@@ -323,34 +323,8 @@ snippet ~~ "~" iA
 endsnippet
 
 context "math()"
-snippet >= ">=" iA
-\geq 
-endsnippet
-
-context "math()"
-snippet <= "<=" iA
-\leq 
-endsnippet
-
-context "math()"
 snippet !> "mapsto" iA
 \mapsto 
-endsnippet
-
-context "math()"
-snippet \nn "cap" iA
-\cap 
-endsnippet
-
-
-context "math()"
-snippet \uu "cup" iA
-\cup 
-endsnippet
-
-context "math()"
-snippet \< "subset" iA
-\subset 
 endsnippet
 
 priority 100

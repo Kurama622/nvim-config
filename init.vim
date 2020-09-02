@@ -6,7 +6,7 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'xuhdev/vim-latex-live-preview', {'for':'tex'}
 Plug 'xuhdev/SingleCompile'
-Plug 'vim-latex/vim-latex', {'for':'tex'}
+"Plug 'vim-latex/vim-latex', {'for':'tex'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
@@ -19,6 +19,9 @@ Plug 'gko/vim-coloresque'
 "Plug 'ludovicchabant/vim-gutentags'
 Plug 'davidhalter/jedi-vim'
 "Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python'}
+"Plug 'voldikss/vim-floaterm'
+"Plug 'luochen1990/rainbow'
+"Plug 'sillybun/vim-repl'
 call plug#end()
 
 " =============================================== 插件配置 ===============================================
@@ -98,13 +101,13 @@ map S :w<CR>
 " 退出
 map Q :q<CR>
 " 右分屏，聚焦右窗口
-map sl :set splitright<CR>:vsplit<CR>:e 
+map sl :set splitright<CR>:vsplit<CR>
 " 左分屏，聚焦左窗口
-map sh :set nosplitright<CR>:vsplit<CR>:e 
+map sh :set nosplitright<CR>:vsplit<CR>
 " 上分屏，聚焦上窗口
-map sk :set nosplitbelow<CR>:split<CR>:e 
+map sk :set nosplitbelow<CR>:split<CR>
 " 下分屏，聚焦下窗口
-map sj :set splitbelow<CR>:split<CR>:e 
+map sj :set splitbelow<CR>:split<CR>
 " 光标移至右窗口
 map <LEADER>l <C-w>l
 " 光标移至上窗口
@@ -145,7 +148,7 @@ map <LEADER>fd /\(\<\w\+\>\)\_s*\1
 " 替换占空符<++>
 map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4l
 " 全选
-map <C-a> ggVG
+nmap <C-a> ggVG
 " 打开我的vimrc
 map <LEADER>rc :e ~/.config/nvim/init.vim<CR>
 " 复制到系统剪切板
@@ -156,6 +159,7 @@ map +p "+p
 "inoremap jj <Esc>
 nmap <CR> o<Esc>
 nmap <LEADER>t :set splitright<CR>:vsplit<CR>:term<CR>
+"nmap <LEADER>ft :FloatermNew<CR>
 autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>iipython<CR>
 autocmd filetype tex noremap <buffer> <LEADER>i :!python3 ~/scripts/pdf2img.py -i %<.pdf -f %:h -o %<<CR>
 
@@ -169,9 +173,15 @@ if has('persistent_undo')
     set undodir=~/.config/nvim/tmp/undo,.
 endif
 
+
 " 显示tab键和空格键
 set list
 set listchars=tab:▸\ ,trail:▫
+
+map J 5j
+map K 5k
+map H 5h
+map L 5l
 
 " ======================================== 自动匹配括号 ========================================
 " autocmd filetype c,r,python,vim,conf inoremap <buffer> ( ()<ESC>i
@@ -182,7 +192,7 @@ set listchars=tab:▸\ ,trail:▫
 " autocmd filetype c,r,python,vim,conf inoremap <buffer> ] <c-r>=ClosePair(']')<CR>
 " autocmd filetype c,r,conf inoremap <buffer> " ""<ESC>i
 " autocmd filetype c,r,vim,conf inoremap <buffer> ' ''<ESC>i
-autocmd filetype r inoremap <buffer> <space>=<space> <space><-<space><ESC>a
+"autocmd filetype r inoremap <buffer> <space>=<space> <space><-<space><ESC>a
 " function! ClosePair(char)
 " if getline('.')[col('.') - 1] == a:char
 "         return "\<Right>"
@@ -277,13 +287,53 @@ endfunc
 "|==========================================================================================================
 
 
+
+let g:netrw_sort_by = 'time'
+let g:netrw_sort_direction = 'reverse'
+let g:netrw_browse_split = 4
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_winsize = 20
+nmap tt :Vex<CR>
+
+" =========
+" ========= vim-repl
+" =========
+"let g:repl_program = {
+            "\   'python': 'ipython',
+            "\   }
+"let g:repl_predefine_python = {
+            "\   'numpy': 'import numpy as np',
+            "\   'matplotlib': 'from matplotlib import pyplot as plt'
+            "\   }
+"let g:repl_cursor_down = 1
+"let g:repl_python_automerge = 1
+"let g:repl_ipython_version = '7'
+"let g:repl_console_name = 'DebugRepl'
+"autocmd filetype python nnoremap <buffer> <leader>i :call ReplBasePython()<CR>
+"autocmd filetype python nnoremap <buffer> <leader>I :call ReplTFPython()<CR>
+
+"func ReplBasePython()
+    "let g:repl_python_pre_launch_command = 'source /home/vegeta/scripts/conda_activate.zshrc'
+    ":REPLToggle
+"endfunc
+"func ReplTFPython()
+    "let g:repl_python_pre_launch_command = 'source /home/vegeta/scripts/tf_activate.zshrc'
+    ":REPLToggle
+"endfunc
+
+"let g:repl_position=3
+
+
 " =========
 " ========= vim-latex
 " =========
-let g:tex_flavor='latex'
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_SmartKeyBS=0
-let g:Tex_ViewRule_pdf = 'zathura'
+"let g:tex_flavor='latex'
+"let g:Tex_DefaultTargetFormat = 'pdf'
+"let g:Tex_SmartKeyBS=0
+"let g:Tex_ViewRule_pdf = 'zathura'
+
+"let g:Tex_GotoError=0
 "let g:Tex_ViewRule_pdf = 'okular'
 "let g:Tex_CompileRule_dvi='latex -src-specials -interaction=nonstopmode $*'
 "let g:Tex_ViewRule_dvi="xdvi -editor 'gvim --servername latex-suite --remote-silent'"
@@ -344,7 +394,9 @@ hi Conceal ctermbg=none
 " ========
 " ======== coc
 " ========
-let g:coc_global_extensions = ['coc-python','coc-snippets','coc-css','coc-markmap']
+let g:coc_global_extensions = ['coc-python','coc-snippets','coc-css','coc-markmap','coc-translator']
+
+nmap ts <Plug>(coc-translator-p)
 
 function! s:check_back_space() abort
         let col = col('.') - 1
@@ -402,7 +454,32 @@ let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
 
-
+" ===
+" === rainbow
+" ===
+"let g:rainbow_active = 1
+"let g:rainbow_conf = {
+"\  'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+"\  'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+"\  'operators': '_,_',
+"\  'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+"\  'separately': {
+"\      '*': {},
+"\      'tex': {
+"\          'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/'],
+"\      },
+"\      'lisp': {
+"\          'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+"\      },
+"\      'vim': {
+"\          'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+"\      },
+"\      'html': {
+"\          'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+"\      },
+"\      'css': 0,
+"\  }
+"\}
 " ========
 " ======== Ultisnips
 " ========
@@ -582,6 +659,7 @@ noremap <C-h> :MRU<CR>
 noremap <C-l> :LinesWithPreview<CR>
 " find buffer
 noremap <C-b> :Buffers<CR>
+noremap <C-\> :set splitright<CR>:vsplit<CR>:cd ~/latex/Qlatex/relearn_lcy<CR>:Rg<CR>
 
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noruler
@@ -600,6 +678,10 @@ command! -bang -nargs=* LinesWithPreview
     \   fzf#vim#with_preview({'options': '--delimiter : --nth 4.. --sort'}, 'up:50%', '?'),
     \   1)
 
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
 "command! -bang -nargs=* Ag
     "\ call fzf#vim#ag(
     "\   '',
@@ -705,37 +787,44 @@ func! RunCode()
 
     if &filetype == 'tex'
         ":SCCompile
-        silent exec "!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex"
-        redir @a
-        silent echo system('~/.config/nvim/scripts/IsError.sh')
-        redir END
-        let Error = len(@a)
-        if Error == 1
-          silent exec "!zathura %<.pdf &"
-          ":LLPStartPreview
-        else
-          echo @a
-        endif
+        "silent exec "!/usr/local/texlive/2019/bin/x86_64-linux/xelatex % >/tmp/nvimlatex"
+        "redir @a
+        "silent echo system('~/.config/nvim/scripts/IsError.sh')
+        "redir END
+        "let Error = len(@a)
+        "if Error == 1
+          "silent exec "!zathura %<.pdf &"
+          "":LLPStartPreview
+        "else
+          "echo @a
+        "endif
+        "set splitright
+        exec "!/usr/local/texlive/2019/bin/x86_64-linux/xelatex %"
+        "exec "FloatermNew /usr/local/texlive/2019/bin/x86_64-linux/xelatex %"
+        silent :!zathura %<.pdf &
       endif
 endfunc
 
+" <C-F5>
 map <F29> :call RUN_latexmk()<CR>
 func! RUN_latexmk()
     exec "w"
     if &filetype == 'tex'
-        ":SCCompile
-        "silent exec "pkill zathura"
-        exec "!/usr/local/texlive/2019/bin/x86_64-linux/pdflatex % >/tmp/nvimlatex"
-        redir @a
-        silent echo system('~/.config/nvim/scripts/IsError.sh')
-        redir END
-        let Error = len(@a)
-        if Error == 1
-          silent exec "!zathura %<.pdf &"
-          ":LLPStartPreview
-        else
-          echo @a
-        endif
+        "":SCCompile
+        ""silent exec "pkill zathura"
+        "exec "!/usr/local/texlive/2019/bin/x86_64-linux/pdflatex % >/tmp/nvimlatex"
+        "redir @a
+        "silent echo system('~/.config/nvim/scripts/IsError.sh')
+        "redir END
+        "let Error = len(@a)
+        "if Error == 1
+          "silent exec "!zathura %<.pdf &"
+          "":LLPStartPreview
+        "else
+          "echo @a
+        "endif
+        exec "!/usr/local/texlive/2019/bin/x86_64-linux/pdflatex %"
+        silent :!zathura %<.pdf &
       endif
 endfunc
 
@@ -758,14 +847,6 @@ func! RunCodeRepl()
                     exec "wincmd p"
             endif
     endif
-    "if &filetype == 'r'
-        "exec "AsyncRun -raw Rscript %"
-        "exec "copen"
-        "exec "wincmd p"
-        "if filereadable('Rplots.pdf')
-            "exec "!zathura Rplots.pdf &"
-        "endif
-    "endif
     if &filetype == 'tex'
         :LLPStartPreview
     endif
