@@ -1,0 +1,5 @@
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = 'source ~/.config/nvim/container/plugin/lightline.vim'
+
