@@ -13,7 +13,6 @@ set updatetime=100
 let g:coc_global_extensions = [
            \ 'coc-python',
            \ 'coc-snippets',
-           \ 'coc-translator',
            \ 'coc-vimlsp'
            \]
 
@@ -41,7 +40,6 @@ inoremap <silent><expr> <A-TAB>
 let g:coc_snippet_next = '<c-j>'
 let g:coc_snippet_prev = '<c-k>'
 
-nmap ts <Plug>(coc-translator-p)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
