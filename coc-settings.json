@@ -36,5 +36,9 @@
     "diagnostic.refreshAfterSave": false,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.virtualTextPrefix": " ❯❯❯ ",
-    "diagnostic.virtualText": true
+    "diagnostic.virtualText": true,
+    "snippets.ultisnips.directories": [
+        "$HOME/.config/nvim/Ultisnips/",
+        "$HOME/.config/dein/repos/github.com/honza/Ultisnips/"
+    ]
 }
