@@ -43,3 +43,10 @@ let g:table_mode_corner='|'
 let g:table_mode_corner_corner='|'
 nnoremap <LEADER>m :TableModeToggle<CR>
 
+let g:default_quick_keys = 0
+let g:org#style#border = 2
+""let g:org#style#bordercolor = 'CursorLineNr'
+let g:org#style#bordercolor = 'keyword'
+let g:org#style#color = 'Identifier'
+nnoremap <silent> <M-b> :call org#main#runCodeBlock()<CR>
+nnoremap <silent> <M-l> :call org#main#runLanguage()<CR>
