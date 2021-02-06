@@ -1,7 +1,19 @@
 syntax on
+set termguicolors
 set t_Co=256
 set background=dark    " Setting dark mode
-colors spacegray
+colorscheme oceanic_material
+let g:oceanic_material_background = "ocean"
+"colors spacegray
+"colors xcodedark
+"colors codedark
+
+" 设置背景透明
+"hi Normal ctermfg=252 ctermbg=none
+"hi Normal ctermfg=None ctermbg=none
+"hi LineInfoLeft ctermfg=None
+
+"colors spacegray
 "colorscheme vegeta
 "colors molokai
 "set cc=64
@@ -44,8 +56,6 @@ set scrolloff=5                                                 " 光标行上�
 "set ruler
 "set transparency=11
 
-" 设置背景透明
-hi Normal ctermfg=252 ctermbg=none
 
 " 关闭nvim保存编辑记录
 silent !mkdir -p ~/.config/nvim/tmp/backup
