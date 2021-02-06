@@ -1,44 +1,47 @@
 [[plugins]]
-repo = 'dhruvasagar/vim-table-mode'
-on_ft = 'markdown'
-on_event = 'BufRead,BufNewFile'
-hook_add = 'source ~/.config/nvim/container/ftplugin/markdown.vim'
+repo = 'ryanoasis/vim-devicons'
+on_event = 'InsertEnter'
 
 [[plugins]]
-repo = 'SirVer/ultisnips'
-on_event = 'BufRead,BufNewFile'
-hook_add = 'source ~/.config/nvim/container/ftplugin/ultisnips.vim'
+repo = 'glepnir/spaceline.vim'
+on_event = 'InsertEnter'
+hook_add = 'source ~/.config/nvim/container/ftplugin/spaceline.vim'
+
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode'
+on_ft = 'markdown'
 
 [[plugins]]
 repo = 'honza/vim-snippets'
-on_source = 'ultisnips'
+on_event = 'InsertEnter'
+on_ft = 'snippet'
 
 
 [[plugins]]
 repo = 'terryma/vim-multiple-cursors'
-on_event = 'BufRead,BufNewFile'
+on_event = ['BufRead', 'BufNewFile']
 
 [[plugins]]
 repo = 'preservim/nerdcommenter'
-on_event = 'BufRead,BufNewFile'
+on_event = ['BufRead', 'BufNewFile']
 
 [[plugins]]
 repo = 'tpope/vim-surround'
-on_event = 'BufRead,BufNewFile'
+on_event = ['BufRead', 'BufNewFile']
 
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
-on_event = 'BufRead,BufNewFile'
+on_event = ['BufRead', 'BufNewFile']
 hook_add = 'source ~/.config/nvim/container/ftplugin/auto-pairs.vim'
 
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
-on_event = 'BufRead,BufNewFile'
+on_event = ['BufRead', 'BufNewFile']
 
-[[plugins]]
-repo = 'fatih/vim-go'
-on_ft = 'go'
-hook_add = 'source ~/.config/nvim/container/ftplugin/go.vim'
+# [[plugins]]
+# repo = 'fatih/vim-go'
+# on_ft = 'go'
+# hook_add = 'source ~/.config/nvim/container/ftplugin/go.vim'
 
 [[plugins]]
 repo = 'vim-python/python-syntax'
@@ -49,3 +52,13 @@ hook_add = 'source ~/.config/nvim/container/ftplugin/python.vim'
 repo = 'demonlord1997/pycomment'
 on_ft = 'python'
 hook_add = 'source ~/.config/nvim/container/ftplugin/pycomment.vim'
+
+[[plugins]]
+repo = 'demonlord1997/markdown-org'
+on_ft = 'markdown'
+hook_add = 'source ~/.config/nvim/container/ftplugin/markdown.vim'
+
+[[plugins]]
+repo = 'voldikss/vim-translator'
+on_event = ['BufRead', 'BufNewFile']
+hook_add = 'source ~/.config/nvim/container/plugin/vim-translator.vim'
