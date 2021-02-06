@@ -16,6 +16,7 @@ if dein#load_state('~/.config/dein')
   call dein#add('neoclide/coc.nvim', {'branch': 'release'})
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+  call dein#add('glepnir/oceanic-material')
   call dein#add('iamcco/markdown-preview.nvim', {'on_ft': ['markdown', 'pandoc.markdown', 'rmd'],
               \ 'build': 'sh -c "cd app && yarn install"' })
   call dein#load_toml('~/.config/nvim/dein.toml', {'lazy': 0})
