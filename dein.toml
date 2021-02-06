@@ -1,8 +1,0 @@
-
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-hook_add = 'source ~/.config/nvim/container/plugin/lightline.vim'
-
-[[plugins]]
-repo = 'voldikss/vim-translator'
-hook_add = 'source ~/.config/nvim/container/plugin/vim-translator.vim'
