@@ -3,13 +3,14 @@
 " ========
 
 " find file
-noremap \ :FZF<CR>
+noremap \ :Files<CR>
 " find history
 noremap <C-h> :MRU<CR>
 " find lines containing keywords
 noremap <C-l> :LinesWithPreview<CR>
 " find buffer
 noremap <C-b> :Buffers<CR>
+noremap <C-p> :HomeFiles<CR>
 
 
 autocmd! FileType fzf
@@ -35,6 +36,9 @@ command! -bang -nargs=* Rg
   \   fzf#vim#with_preview(), <bang>0)
 
 command! -bang -nargs=* MRU call fzf#vim#history(fzf#vim#with_preview())
+
+command! -bang HomeFiles call fzf#vim#files($HOME, <bang>0)
+
 
 let g:fzf_colors =
             \ { 'fg':      ['fg', 'Normal'],
