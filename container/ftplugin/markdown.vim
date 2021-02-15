@@ -41,7 +41,6 @@ let g:mkdp_page_title = '${name}'
 
 let g:table_mode_corner='|'
 let g:table_mode_corner_corner='|'
-nnoremap <LEADER>m :TableModeToggle<CR>
 
 let g:default_quick_keys = 0
 let g:org#style#border = 2
