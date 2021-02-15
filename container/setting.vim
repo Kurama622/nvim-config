@@ -99,3 +99,5 @@ endfunction
 " Autocmds:
 au InsertLeave * call Fcitx2en()
 au InsertEnter * call Fcitx2zh()
+
+command! Ranger FloatermNew ranger
