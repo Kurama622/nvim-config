@@ -70,20 +70,26 @@ map +p "+p
 "inoremap jj <Esc>
 "tnoremap <ESC> <C-\><C-n>
 tnoremap <LEADER>i exit<CR>
-tnoremap <A-w> <ESC><C-w><C-w>
-inoremap <A-w> <ESC><C-w><C-w>
-noremap <A-w> <C-w><C-w>
-map J 5j
-map K 5k
-map H 5h
-map L 5l
-nmap <CR> o<Esc>
+tnoremap <C-w><C-w> <C-\><C-n><C-w><C-w>
+tnoremap <A-w> <C-\><C-n><C-w><C-w><C-\><C-n>i
+inoremap <A-w> <Esc><C-w><C-w><C-\><C-n>i
+noremap <A-w> <C-w><C-w><C-\><C-n>i
+noremap <C-j> J
+noremap J 5j
+noremap K 5k
+noremap H 5h
+noremap L 5l
+nnoremap <CR> o<Esc>
 nnoremap 0 ^
 nnoremap ^ 0
 vnoremap 0 ^
 vnoremap ^ 0
+
 nmap <LEADER>t :set splitright<CR>:vsplit<CR>:term<CR>
-"nmap <LEADER>ft :FloatermNew<CR>
-autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>iipython<CR>
+
+nmap <LEADER>s :FloatermNew --position=bottomright<CR>
+"tnoremap <LEADER>s <C-\><C-n><C-w><C-w>
+
+autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>ipython<CR>
 autocmd filetype tex noremap <buffer> <LEADER>i :!python3 ~/usr_file/script/pdf2img.py -i %<.pdf -f %:h -o %<<CR>
 vnoremap <LEADER>\ ::yank +<CR>:!bash ~/usr_file/script/code2image/code2image.sh %:h %<<CR>
