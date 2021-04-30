@@ -57,7 +57,7 @@ map rc :source ~/.config/nvim/init.vim<CR>
 " 寻找两个相等的单词
 map <LEADER>fd /\(\<\w\+\>\)\_s*\1
 " 替换占空符<++>
-"map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4l
+map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4l
 " 全选
 "nmap <C-a> ggVG
 " 打开我的vimrc
@@ -92,4 +92,4 @@ nmap <LEADER>s :FloatermNew --position=bottomright<CR>
 
 autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>ipython<CR>
 autocmd filetype tex noremap <buffer> <LEADER>i :!python3 ~/usr_file/script/pdf2img.py -i %<.pdf -f %:h -o %<<CR>
-vnoremap <LEADER>\ ::yank +<CR>:!bash ~/usr_file/script/code2image/code2image.sh %:h %<<CR>
+"vnoremap <LEADER>\ ::yank +<CR>:!bash ~/usr_file/script/code2image/code2image.sh %:h %<<CR>

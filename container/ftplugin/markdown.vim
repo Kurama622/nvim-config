@@ -31,7 +31,8 @@ let g:mkdp_preview_options = {
     \ 'sequence_diagrams': {}
     \ }
 
-let g:mkdp_markdown_css = '$HOME/.config/nvim/MDtheme/github.css'
+"let g:mkdp_markdown_css = '$HOME/.config/nvim/MDtheme/github.css'
+let g:mkdp_markdown_css = ''
 
 let g:mkdp_highlight_css = ''
 

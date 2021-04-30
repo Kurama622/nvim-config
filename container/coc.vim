@@ -4,11 +4,11 @@
 
 set updatetime=100
 
-"if has("patch-8.1.1564")
-    "set signcolumn=yes
-"else
-    "set signcolumn=yes
-"endif
+if has("patch-8.1.1564")
+    set signcolumn=number
+else
+    set signcolumn=yes
+endif
 
 let g:coc_global_extensions = [
            \ 'coc-python',
@@ -45,6 +45,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <LEADER>rn <Plug>(coc-rename)
+inoremap <silent><expr> <c-space> coc#refresh()
 
 "function! s:cocActionsOpenFromSelected(type) abort
   "execute 'CocCommand actions.open ' . a:type

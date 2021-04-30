@@ -40,5 +40,6 @@
     "snippets.ultisnips.directories": [
         "$HOME/.config/nvim/Ultisnips/",
         "$HOME/.config/dein/repos/github.com/honza/Ultisnips/"
-    ]
+    ],
+    "clangd.path": "/home/vegeta/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd"
 }

@@ -7,12 +7,17 @@ repo = 'glepnir/spaceline.vim'
 on_event = 'InsertEnter'
 hook_source = 'source ~/.config/nvim/container/ftplugin/spaceline.vim'
 
+
+[[plugins]]
+repo = 'mzlogin/vim-markdown-toc'
+on_ft = 'markdown'
+
 [[plugins]]
 repo = 'dhruvasagar/vim-table-mode'
 on_ft = 'markdown'
 on_func = 'TableModeToggle'
 hook_source = '''
-nnoremap <LEADER>m :TableModeToggle<CR>
+nnoremap <LEADER>tm :TableModeToggle<CR>
 '''
 
 [[plugins]]
@@ -88,3 +93,21 @@ source $HOME/.config/nvim/container/ftplugin/markdown.vim
 repo = 'voldikss/vim-translator'
 on_event = ['BufRead', 'BufNewFile']
 hook_source = 'source ~/.config/nvim/container/plugin/vim-translator.vim'
+
+[[plugins]]
+repo = 'ianding1/leetcode.vim'
+on_event = ['BufRead', 'BufNewFile']
+hook_source = 'source ~/.config/nvim/container/plugin/leetcode.vim'
+
+[[plugins]]
+repo = 'puremourning/vimspector'
+on_ft = ['cpp']
+hook_post_update = ':VimspectorUpdate vscode-cpptools'
+build = './install_gadget.py --enable-c --enable-cpp'
+hook_source = 'source ~/.config/nvim/container/plugin/vimspector.vim'
+
+# [[plugins]]
+# repo = 'airblade/vim-gitgutter''
+# on_event = ['BufRead', 'BufNewFile']
+# hook_source = 'source ~/.config/nvim/container/plugin/gitgutter.vim'
+

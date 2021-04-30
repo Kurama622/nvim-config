@@ -78,7 +78,10 @@ map <F5> :call RunCode()<CR>
 func! RunCode()
     :silent exec "w"
     if &filetype == 'python'
-        :AsyncRun -mode=term -pos=floaterm -focus=1 python %
+        ":AsyncRun -mode=term -pos=floaterm -focus=1 python %
+        set splitright
+        :vsp
+        :term python3 %
 
     elseif &filetype == 'go'
         :AsyncRun -mode=term -pos=floaterm -focus=1 go run %
@@ -87,7 +90,8 @@ func! RunCode()
         :AsyncRun -mode=term -pos=floaterm -focus=1 gcc % -Wall -o %< && ./%<
 
     elseif &filetype == 'cpp'
-        :AsyncRun -mode=term -pos=floaterm -focus=1 g++ -std=c++11 % -Wall -o %< && ./%<
+        :AsyncRun -mode=term -pos=floaterm -focus=1 g++ % -Wall -o %< && ./%<
+        ":AsyncRun -mode=term -pos=floaterm -focus=1 g++ -std=c++11 % -Wall -o %< && ./%<
 
     elseif &filetype == 'markdown'
         exec "MarkdownPreview"

@@ -3,7 +3,7 @@
 " ========
 
 " find file
-noremap \ :Files<CR>
+noremap <C-\> :Files<CR>
 " find history
 noremap <C-h> :MRU<CR>
 " find lines containing keywords

@@ -1,9 +1,12 @@
 syntax on
 set termguicolors
-set t_Co=256
+"set t_Co=256
 set background=dark    " Setting dark mode
+"let g:oceanic_material_background = "medium"
+"let g:oceanic_material_background = "deep"
+let g:oceanic_material_background = "darker"
+"let g:oceanic_material_background = "ocean"
 colorscheme oceanic_material
-let g:oceanic_material_background = "ocean"
 "colors spacegray
 "colors xcodedark
 "colors codedark
@@ -55,7 +58,7 @@ set backspace=indent,eol,start                                  " 退格键可�
 set scrolloff=5                                                 " 光标行上下移动范围各缩小5行
 "set ruler
 "set transparency=11
-
+set signcolumn=yes
 
 " 关闭nvim保存编辑记录
 silent !mkdir -p ~/.config/nvim/tmp/backup
