@@ -1,12 +1,30 @@
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-on_event = 'InsertEnter'
+#[[plugins]]
+#repo = 'ryanoasis/vim-devicons'
+#on_event = 'InsertEnter'
+#
+#[[plugins]]
+#repo = 'glepnir/spaceline.vim'
+#on_event = 'InsertEnter'
+#hook_source = 'source ~/.config/nvim/container/ftplugin/spaceline.vim'
+#
+
+#[[plugins]]
+#repo = 'ojroques/vim-scrollstatus'
+#on_event = 'InsertEnter'
 
 [[plugins]]
-repo = 'glepnir/spaceline.vim'
+repo = 'theniceboy/eleline.vim'
 on_event = 'InsertEnter'
-hook_source = 'source ~/.config/nvim/container/ftplugin/spaceline.vim'
+hook_source = 'source ~/.config/nvim/container/ftplugin/statusline.vim'
 
+[[plugins]]
+repo = 'ap/vim-css-color'
+on_ft = ['vim']
+
+[[plugins]]
+repo = 'lervag/vimtex'
+on_ft = ['tex', 'plaintex']
+hook_source = 'source ~/.config/nvim/container/ftplugin/vimtex.vim'
 
 [[plugins]]
 repo = 'mzlogin/vim-markdown-toc'

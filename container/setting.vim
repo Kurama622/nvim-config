@@ -83,16 +83,16 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 function! Fcitx2en()
-    let input_status = system('fcitx-remote')
+    let input_status = system('fcitx5-remote')
     if input_status == 2
         let b:inputtoggle = 1
-        call system('fcitx-remote -c')
+        call system('fcitx5-remote -c')
     endif
 endfunction
 function! Fcitx2zh()
     try
     if b:inputtoggle == 1
-        call system('fcitx-remote -o')
+        call system('fcitx5-remote -o')
         let b:inputtoggle = 0
     endif
     catch /inputtoggle/

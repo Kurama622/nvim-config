@@ -69,7 +69,7 @@ map +p "+p
 " 插入模式下jj映射为<Esc>
 "inoremap jj <Esc>
 "tnoremap <ESC> <C-\><C-n>
-tnoremap <LEADER>i exit<CR>
+"tnoremap <LEADER>i exit<CR>
 tnoremap <C-w><C-w> <C-\><C-n><C-w><C-w>
 tnoremap <A-w> <C-\><C-n><C-w><C-w><C-\><C-n>i
 inoremap <A-w> <Esc><C-w><C-w><C-\><C-n>i
@@ -90,6 +90,12 @@ nmap <LEADER>t :set splitright<CR>:vsplit<CR>:term<CR>
 nmap <LEADER>s :FloatermNew --position=bottomright<CR>
 "tnoremap <LEADER>s <C-\><C-n><C-w><C-w>
 
-autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>ipython<CR>
+"autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>ipython<CR>
+
+autocmd filetype python nnoremap <buffer><silent> <LEADER>i :FloatermNew --width=0.4 --height=1.0 --wintype=float --name=repl --position=right ipython<CR>%autoindent<CR>
+autocmd filetype python nnoremap <buffer> <leader>w :FloatermSend <CR>j
+autocmd filetype python vnoremap <buffer> <leader>w :'<,'>FloatermSend <CR>j
+
+
 autocmd filetype tex noremap <buffer> <LEADER>i :!python3 ~/usr_file/script/pdf2img.py -i %<.pdf -f %:h -o %<<CR>
 "vnoremap <LEADER>\ ::yank +<CR>:!bash ~/usr_file/script/code2image/code2image.sh %:h %<<CR>

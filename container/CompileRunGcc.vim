@@ -97,8 +97,8 @@ func! RunCode()
         exec "MarkdownPreview"
 
     elseif &filetype == 'tex'
-        exec "!xelatex %"
-        silent :!zathura %<.pdf &
+        silent! exec "VimtexStop"
+        silent! exec "VimtexCompile"
     elseif &filetype == 'vim'
         :so %
     endif
